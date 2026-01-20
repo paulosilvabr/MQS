@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MQS - Horários</title>
-    <!-- Fontes e Captura de Tela -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    
     <link rel="stylesheet" href="styles.css">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
 
-    <!-- Sticky Header -->
     <header class="context-header">
         <div class="header-content">
             <span class="logo-small">MQS</span>
@@ -26,23 +27,18 @@
     </header>
 
     <main id="app-viewport">
-        <!-- Schedule Area -->
-        <section id="schedule-view" class="view-list">
-            <!-- Cards gerados via JS -->
-        </section>
+        <section id="schedule-view" class="schedule-view">
+            </section>
     </main>
 
-    <!-- Floating Dock -->
     <nav class="floating-dock">
-        <button class="dock-btn-icon" id="btn-back" title="Nova Busca">
+        <button class="dock-btn-icon" id="btn-search" title="Nova Busca">
             <span class="material-symbols-rounded">search</span>
         </button>
-
-        <button class="dock-btn-icon" id="btn-toggle-view" title="Mudar Visualização">
+        <button class="dock-btn-icon" id="btn-toggle-view" title="Alternar Visualização">
             <span class="material-symbols-rounded" id="toggle-icon">view_week</span>
         </button>
-
-        <button class="dock-btn-primary" id="btn-share">
+        <button class="dock-btn-primary" id="btn-share" title="Salvar Grade">
             <span class="material-symbols-rounded">ios_share</span>
             <span>Compartilhar</span>
         </button>
@@ -50,5 +46,4 @@
 
     <script src="app.js"></script>
 </body>
-
 </html>
