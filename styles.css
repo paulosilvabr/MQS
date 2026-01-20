@@ -200,51 +200,89 @@ body {
     margin-bottom: 12px;
 }
 
-/* Floating Dock */
+/* Floating Dock (The Island) */
 .floating-dock {
     position: fixed;
     bottom: 24px;
     left: 50%;
     transform: translateX(-50%);
-    background: var(--surface);
-    padding: 8px;
-    border-radius: 50px;
+
+    /* Glassmorphism Base */
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    /* Shape */
+    padding: 8px 8px 8px 24px;
+    /* Less padding on right to merge with button */
+    border-radius: 9999px;
+    /* Fully rounded pill */
+
+    /* Layout */
     display: flex;
     align-items: center;
-    gap: 8px;
-    box-shadow: var(--shadow-float);
+    gap: 16px;
+
+    /* Shadow */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
     z-index: 100;
+    width: auto;
+    max-width: 90%;
 }
 
-.dock-btn {
+/* Secondary Buttons (Search & Layout) */
+.dock-btn-icon {
+    background: transparent;
     border: none;
-    background: none;
-    width: 48px;
-    height: 48px;
+    color: var(--text-muted);
+    /* Greyish */
+    cursor: pointer;
+    padding: 8px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    color: var(--text-main);
-    transition: 0.2s;
+    transition: all 0.2s ease;
 }
 
-.dock-btn:hover {
-    background: var(--bg-body);
+.dock-btn-icon:hover,
+.dock-btn-icon:active {
+    background-color: var(--primary-light);
+    color: var(--primary);
 }
 
-.btn-primary-action {
-    background: var(--primary);
+.dock-btn-icon .material-symbols-rounded {
+    font-size: 28px;
+    /* Slightly larger for touch targets */
+}
+
+/* Primary Action (Share) - The Extended FAB */
+.dock-btn-primary {
+    background-color: var(--primary);
+    /* Zen Teal */
     color: white;
-    width: auto;
-    padding: 0 20px;
+    border: none;
+
+    /* Shape */
+    border-radius: 999px;
+    /* Pill shape */
+    padding: 12px 24px;
+
+    /* Layout */
+    display: flex;
+    align-items: center;
     gap: 8px;
-    font-weight: 600;
+    font-family: inherit;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 137, 123, 0.3);
+    /* Colored shadow */
+    transition: transform 0.2s;
 }
 
-.btn-primary-action:hover {
-    background: var(--primary-dark);
+.dock-btn-primary:active {
+    transform: scale(0.96);
 }
 
 /* Animations */
