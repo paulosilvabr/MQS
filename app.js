@@ -1,130 +1,147 @@
+// 1. THE DATA (HARDCODED TRUTH)
+const scheduleData = [
+    {
+        day: "Segunda",
+        items: [
+            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
+            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
+            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
+        ]
+    },
+    {
+        day: "Terça",
+        items: [
+            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
+            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
+            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
+        ]
+    },
+    {
+        day: "Quarta",
+        items: [
+            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
+            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
+            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
+        ]
+    },
+    {
+        day: "Quinta",
+        items: [
+            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
+            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
+            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
+        ]
+    },
+    {
+        day: "Sexta",
+        items: [
+            { type: 'class', timeStart: '07:30', timeEnd: '09:00', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' },
+            { type: 'interval', timeStart: '09:00', timeEnd: '09:15', label: 'INTERVALO' },
+            { type: 'class', timeStart: '09:15', timeEnd: '10:45', subject: 'Fund Proj b de Dados', room: 'LABDES', prof: 'Liliane Felix' }
+        ]
+    }
+];
+
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('setup-form');
-    const resultsArea = document.getElementById('results-area');
-    const courseInput = document.getElementById('course-input');
-    const periodContainer = document.getElementById('period-chips');
-    const tipContainer = document.getElementById('tip-container');
-    
-    let db = {};
+    const scheduleView = document.getElementById('schedule-view');
+    const toggleBtn = document.getElementById('btn-toggle-view');
+    const shareBtn = document.getElementById('btn-share');
+    const backBtn = document.getElementById('btn-back');
 
-    // 1. ASYNC/AWAIT: Load main data
-    async function loadAppData() {
-        try {
-            const response = await fetch('db.json');
-            db = await response.json();
-            populateCourses();
-            renderPeriodChips(6); // Default 6 periods
-            checkLocalStorage();
-        } catch (error) {
-            console.error("Erro ao carregar banco de dados", error);
-        }
+    // 1. Renderizar Grade
+    function renderSchedule() {
+        // Simple logic: If weekend (0 or 6), default to Monday (0) or keep same index logic
+        // The data array index 0 is Monday. new Date().getDay() returns 0 for Sunday, 1 Mon...
+        // Let's map JS day to Data Index: Mon(1)->0, Tue(2)->1 ... Fri(5)->4.
+        const day = new Date().getDay();
+        const todayIndex = (day >= 1 && day <= 5) ? day - 1 : -1; // -1 means no today highlight on weekend
+
+        scheduleView.innerHTML = scheduleData.map((data, index) => `
+            <article class="day-card ${index === todayIndex ? 'is-today' : ''}">
+                <div class="day-card__title">
+                    ${data.day}
+                </div>
+                <div class="classes-list">
+                    ${data.items.map(item => {
+            if (item.type === 'interval') {
+                return `
+                            <div class="interval-pill">
+                                <span>${item.timeStart}</span>
+                                <span>${item.label}</span>
+                                <span>${item.timeEnd}</span>
+                            </div>
+                            `;
+            } else {
+                // type === 'class'
+                return `
+                            <div class="class-item">
+                                <p class="class-item__subject">${item.subject}</p>
+                                <div class="class-item__details">
+                                    <span>${item.timeStart}</span>
+                                    <span class="class-item__room">${item.room}</span>
+                                    <span>${item.timeEnd}</span>
+                                </div>
+                                <p class="class-item__prof">${item.prof}</p>
+                            </div>
+                            `;
+            }
+        }).join('')}
+                </div>
+            </article>
+        `).join('');
     }
 
-    // 2. .THEN(): Load Tip of the Day
-    function loadTip() {
-        fetch('tip_of_day.json')
-            .then(response => response.json())
-            .then(data => {
-                const randomTip = data.tips[Math.floor(Math.random() * data.tips.length)];
-                tipContainer.textContent = `Dica: ${randomTip}`;
-            });
-    }
-
-    function populateCourses() {
-        const datalist = document.getElementById('courses-list');
-        db.courses.forEach(course => {
-            const option = document.createElement('option');
-            option.value = course.name;
-            datalist.appendChild(option);
-        });
-    }
-
-    function renderPeriodChips(count) {
-        periodContainer.innerHTML = '';
-        for (let i = 1; i <= count; i++) {
-            const chip = document.createElement('div');
-            chip.className = `chip ${i === 1 ? 'active' : ''}`;
-            chip.textContent = `${i}º`;
-            chip.dataset.value = i;
-            chip.onclick = () => {
-                document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
-                chip.classList.add('active');
-            };
-            periodContainer.appendChild(chip);
-        }
-    }
-
-    function checkLocalStorage() {
-        const saved = JSON.parse(localStorage.getItem('mqs_config'));
-        if (saved) {
-            courseInput.value = saved.course;
-            document.querySelector(`input[name="shift"][value="${saved.shift}"]`).checked = true;
-            showSchedule(saved.course, saved.shift, saved.period);
-        }
-    }
-
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const course = courseInput.value;
-        const shift = document.querySelector('input[name="shift"]:checked').value;
-        const period = document.querySelector('.chip.active').dataset.value;
-
-        if (!course) return alert("Escolha um curso, mano!");
-
-        localStorage.setItem('mqs_config', JSON.stringify({ course, shift, period }));
-        showSchedule(course, shift, period);
+    // 2. Alternar Visualização (Grid/Lista)
+    toggleBtn.addEventListener('click', () => {
+        const isGrid = scheduleView.classList.toggle('view-grid');
+        const icon = document.getElementById('toggle-icon');
+        icon.textContent = isGrid ? 'view_agenda' : 'view_week';
     });
 
-    function showSchedule(courseName, shift, period) {
-        const courseData = db.courses.find(c => c.name === courseName);
-        if (!courseData || !courseData.schedules[shift][period]) {
-            alert("Horário não encontrado para este período.");
-            return;
+    // 3. Sistema de Compartilhamento (Snapshot)
+    shareBtn.addEventListener('click', async () => {
+        const dock = document.querySelector('.floating-dock');
+
+        // UI Feedback: Esconder dock para o print
+        dock.style.display = 'none';
+
+        try {
+            const canvas = await html2canvas(document.querySelector("#app-viewport"), {
+                backgroundColor: "#F0F4F8",
+                scale: 2 // Alta qualidade
+            });
+
+            canvas.toBlob(blob => {
+                const file = new File([blob], "grade-mqs.png", { type: "image/png" });
+
+                if (navigator.share) {
+                    navigator.share({
+                        title: 'Minha Grade MQS',
+                        text: 'Confere meus horários atualizados!',
+                        files: [file]
+                    });
+                } else {
+                    // Fallback Download
+                    const link = document.createElement('a');
+                    link.download = 'grade-mqs.png';
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+                }
+            });
+        } catch (err) {
+            console.error("Erro ao gerar imagem", err);
+        } finally {
+            dock.style.display = 'flex';
         }
+    });
 
-        const todayClasses = courseData.schedules[shift][period];
-        renderResults(todayClasses);
-        
-        form.classList.add('hidden');
-        resultsArea.classList.remove('hidden');
-        resultsArea.classList.add('fade-in');
-    }
+    // 4. Voltar (Reset)
+    backBtn.addEventListener('click', () => {
+        if (confirm("Deseja voltar para a tela inicial? (Recarrega a aplicação)")) {
+            // In a real SPA, this would route back. Here we reload.
+            window.location.reload();
+        }
+    });
 
-    function renderResults(classes) {
-        const weekList = document.getElementById('week-list');
-        const nowSubject = document.getElementById('now-subject');
-        const nowRoom = document.getElementById('now-room');
-        
-        weekList.innerHTML = '';
-        
-        // Simulating "Now" logic based on day of week
-        const days = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
-        const todayName = days[new Date().getDay()];
-        const currentClass = classes.find(c => c.day === todayName) || classes[0];
-
-        nowSubject.textContent = currentClass.subject;
-        nowRoom.textContent = `Local: ${currentClass.room} • ${currentClass.time}`;
-
-        classes.forEach(c => {
-            const li = document.createElement('li');
-            li.className = 'schedule-item';
-            li.innerHTML = `
-                <div>
-                    <strong>${c.day}</strong><br>
-                    <small>${c.subject}</small>
-                </div>
-                <span class="badge" style="background:var(--primary-light); color:var(--primary-dark)">${c.room}</span>
-            `;
-            weekList.appendChild(li);
-        });
-    }
-
-    document.getElementById('btn-reset').onclick = () => {
-        localStorage.clear();
-        location.reload();
-    };
-
-    // Initialize
-    loadAppData();
-    loadTip();
+    renderSchedule();
 });
