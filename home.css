@@ -1,29 +1,27 @@
 :root {
-    /* --- PALETA ZEN (Biofilia) --- */
-    --primary: #00897B;          /* Teal Profundo */
-    --primary-light: #B2DFDB;    /* Teal Suave */
-    --primary-dark: #004D40;
+    /* Paleta baseada na Foto (Teal/Green) */
+    --primary: #00695C;          
+    --primary-hover: #004D40;
     
-    --bg-body: #F0F4F8;          /* Ice Blue */
+    --bg-body: #F0F2F5;
     --surface: #FFFFFF;
     
-    --text-main: #263238;
-    --text-muted: #607D8B;
+    --text-main: #1F2937;
+    --text-muted: #6B7280;
+    --border-light: #E5E7EB;
     
-    /* Geometria */
-    --radius-lg: 24px;
-    --radius-md: 16px;
     --radius-pill: 999px;
+    --radius-card: 32px;
     
-    --shadow-soft: 0 8px 24px rgba(0, 137, 123, 0.08);
-    --shadow-hover: 0 12px 32px rgba(0, 137, 123, 0.15);
+    --shadow-hero: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Outfit', 'Roboto', sans-serif;
+    font-family: 'Outfit', sans-serif;
     background-color: var(--bg-body);
+    background-image: radial-gradient(circle at top right, #E0F2F1 0%, transparent 40%);
     color: var(--text-main);
     display: flex;
     justify-content: center;
@@ -33,185 +31,246 @@ body {
 
 .zen-container {
     width: 100%;
-    max-width: 480px; /* Largura mobile ideal */
+    max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 32px;
-    margin-top: 20px;
+    gap: 24px;
+    margin-top: 40px;
 }
 
-/* --- HERO SECTION --- */
+/* --- UTILITÁRIOS (Lógica) --- */
+.hidden { display: none !important; }
+
+/* --- HERO CARD --- */
 .hero-card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    padding: 32px 20px;
     text-align: center;
-    padding: 20px 0;
+    box-shadow: var(--shadow-hero);
+    position: relative;
+    overflow: hidden;
 }
 
-.logo-badge {
-    background: var(--primary);
-    color: white;
-    font-weight: 700;
-    padding: 8px 16px;
-    border-radius: 12px;
-    display: inline-block;
-    margin-bottom: 16px;
-    font-size: 0.9rem;
-    letter-spacing: 1px;
-}
-
-.hero-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: var(--primary-dark);
-    line-height: 1.2;
+.brand-title {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 3.5rem;
+    color: var(--primary);
+    line-height: 1;
+    letter-spacing: -1px;
     margin-bottom: 8px;
 }
 
-.hero-subtitle {
+.brand-subtitle {
     font-size: 1rem;
+    color: var(--text-main);
+    font-weight: 500;
+}
+
+/* --- WARM CARD (Boas Vindas) --- */
+.warm-card {
+    background: var(--surface);
+    border-radius: var(--radius-card);
+    padding: 32px 24px;
+    text-align: center;
+    box-shadow: var(--shadow-hero);
+    animation: fadeIn 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.welcome-icon { font-size: 3rem; margin-bottom: 4px; }
+
+.warm-title {
+    font-size: 1.25rem;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.saved-context-box {
+    background: #F3F4F6;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+#saved-course { font-weight: 700; color: var(--primary); }
+#saved-details { font-size: 0.9rem; color: var(--text-muted); }
+
+.btn-text {
+    background: none;
+    border: none;
     color: var(--text-muted);
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 8px;
 }
 
 /* --- FORMULÁRIO --- */
 .flow-form {
-    background: var(--surface);
-    padding: 32px 24px;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-soft);
     display: flex;
     flex-direction: column;
     gap: 28px;
+    padding: 0 4px;
 }
 
 .label-zen {
     display: block;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text-muted);
-    margin-bottom: 12px;
+    color: var(--text-main);
+    margin-bottom: 10px;
     margin-left: 4px;
 }
 
-/* INPUT */
+/* Input Pílula */
 .input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
 }
-
 .input-wrapper .icon {
     position: absolute;
-    left: 16px;
-    color: var(--text-muted);
+    left: 20px;
+    color: #9CA3AF;
+    font-size: 20px;
 }
-
 .input-wrapper input {
     width: 100%;
-    padding: 16px 16px 16px 48px;
-    border: 2px solid #E0E0E0;
-    border-radius: var(--radius-md);
-    font-family: inherit;
+    padding: 16px 16px 16px 52px;
+    border: 1px solid var(--text-muted);
+    border-radius: var(--radius-pill);
+    font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: var(--text-main);
-    background: #FAFAFA;
-    transition: all 0.3s;
+    background: transparent;
+    transition: all 0.2s;
 }
-
 .input-wrapper input:focus {
     outline: none;
     border-color: var(--primary);
-    background: white;
+    border-width: 2px;
 }
 
-/* SEGMENTED BUTTON (TURNO) */
+/* Segmented Button (Outline) */
 .segmented-control {
     display: flex;
-    background: #F5F7FA;
+    background: transparent;
+    border: 1px solid var(--text-muted);
     padding: 4px;
-    border-radius: var(--radius-md);
+    border-radius: var(--radius-pill);
 }
-
 .segment-btn {
     flex: 1;
     border: none;
-    padding: 12px;
-    border-radius: 12px;
+    padding: 10px;
+    border-radius: var(--radius-pill);
     background: transparent;
     color: var(--text-muted);
-    font-weight: 600;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s;
 }
-
 .segment-btn.active {
-    background: white;
-    color: var(--primary);
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background: var(--primary);
+    color: white;
+    font-weight: 600;
 }
 
-/* CHIPS HORIZONTAIS (PERÍODO) */
+/* Chips (Círculos Outline) */
 .horizontal-scroll-wrapper {
-    overflow-x: auto;
-    /* Esconde barra de rolagem */
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none;  /* IE/Edge */
-    margin: 0 -24px; /* Quebra o padding do container */
-    padding: 0 24px; /* Adiciona respiro interno */
+    position: relative;
+    margin: 0 -20px;
+    padding: 0 20px;
 }
-.horizontal-scroll-wrapper::-webkit-scrollbar { display: none; } /* Chrome */
-
 .chips-container {
     display: flex;
     gap: 12px;
-    padding-bottom: 4px; /* Espaço para sombra */
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scrollbar-width: none;
 }
+.chips-container::-webkit-scrollbar { display: none; }
 
 .chip-btn {
-    background: #F5F7FA;
-    border: 2px solid transparent;
-    color: var(--text-muted);
-    font-weight: 600;
     width: 48px;
     height: 48px;
-    border-radius: 50%; /* Bolinha */
+    border-radius: 50%;
+    background: white;
+    border: 1px solid var(--text-muted);
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 1rem;
     flex-shrink: 0;
     cursor: pointer;
     transition: all 0.2s;
-    font-family: inherit;
-    font-size: 1rem;
 }
-
 .chip-btn.active {
     background: var(--primary);
+    border-color: var(--primary);
     color: white;
-    transform: scale(1.1);
-    box-shadow: 0 4px 12px rgba(0, 137, 123, 0.3);
+    transform: scale(1.05);
 }
 
-/* CTA BUTTON */
+/* Scroll Fade */
+.scroll-fade {
+    position: absolute;
+    right: 0; top: 0;
+    height: 100%; width: 40px;
+    background: linear-gradient(to right, transparent, var(--bg-body));
+    pointer-events: none;
+}
+
+/* Feedback Msg */
+.feedback-msg {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #C62828;
+    background: #FFEBEE;
+    padding: 12px;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid #EF9A9A;
+    animation: fadeIn 0.3s;
+}
+
+/* Botão CTA */
 .cta-primary {
     width: 100%;
     background: var(--primary);
     color: white;
     border: none;
-    padding: 18px;
+    padding: 16px;
     border-radius: var(--radius-pill);
     font-size: 1.1rem;
-    font-weight: 700;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
+    font-weight: 600;
     cursor: pointer;
-    box-shadow: var(--shadow-soft);
-    transition: all 0.2s;
+    transition: background 0.2s;
+    font-family: 'Outfit', sans-serif;
+}
+.cta-primary:hover { background: var(--primary-hover); }
+.cta-primary:active { transform: scale(0.98); }
+
+/* Footer Dica */
+.tip-footer {
+    text-align: center;
+    margin-top: 20px;
+    opacity: 0.6;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--text-muted);
 }
 
-.cta-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-hover);
-}
-
-.cta-primary:active {
-    transform: scale(0.98);
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }

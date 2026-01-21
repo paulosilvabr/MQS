@@ -1,76 +1,105 @@
 document.addEventListener('DOMContentLoaded', () => {
     
-    // --- ELEMENTOS ---
+    // --- ELEMENTOS DO DOM ---
+    const form = document.getElementById('selection-form');
+    const warmDiv = document.getElementById('warm-welcome');
+    
+    // Elementos do Warm Start
+    const savedCourse = document.getElementById('saved-course');
+    const savedDetails = document.getElementById('saved-details');
+    const quickBtn = document.getElementById('btn-quick-access');
+    const resetBtn = document.getElementById('btn-reset-app');
+    
+    // Elementos do Formulário
+    const courseInput = document.getElementById('course-input');
     const shiftBtns = document.querySelectorAll('.segment-btn');
     const periodBtns = document.querySelectorAll('.chip-btn');
-    const courseInput = document.getElementById('course-input');
     const submitBtn = document.getElementById('btn-ver-horarios');
+    const feedbackMsg = document.getElementById('form-feedback');
 
-    // --- ESTADO (Armazena as escolhas) ---
-    let userSelection = {
-        course: '',
-        shift: 'matutino', // Valor padrão
-        period: '2'        // Valor padrão
-    };
+    // Estado Inicial do Formulário
+    let userSelection = { course: '', shift: 'matutino', period: '2' };
 
-    // 1. Carregar dados salvos (Se o aluno já veio aqui antes)
+    // ============================================================
+    // 1. LÓGICA DE START (Cold vs Warm)
+    // ============================================================
     const savedData = localStorage.getItem('mqs_user_data');
+
     if (savedData) {
-        userSelection = JSON.parse(savedData);
+        // --- CENÁRIO: ALUNO JÁ CONHECIDO ---
+        const data = JSON.parse(savedData);
         
-        // Atualiza UI
-        courseInput.value = userSelection.course;
-        updateActiveState(shiftBtns, userSelection.shift);
-        updateActiveState(periodBtns, userSelection.period);
+        // Esconde form, mostra boas-vindas
+        form.classList.add('hidden');
+        warmDiv.classList.remove('hidden');
+        
+        // Preenche os dados visuais
+        savedCourse.textContent = data.course;
+        // Formata turno (Matutino/Noturno)
+        const shiftFormatted = data.shift.charAt(0).toUpperCase() + data.shift.slice(1);
+        savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
+
+    } else {
+        // --- CENÁRIO: PRIMEIRO ACESSO ---
+        warmDiv.classList.add('hidden');
+        form.classList.remove('hidden');
     }
 
-    // 2. Lógica dos Botões de Turno (Segmented)
+    // ============================================================
+    // 2. INTERAÇÃO DO USUÁRIO
+    // ============================================================
+    
+    // Botão "Ver Grade Agora" (Acesso Rápido)
+    quickBtn.addEventListener('click', () => {
+        window.location.href = 'grade.html';
+    });
+
+    // Botão "Alterar Curso" (Reset)
+    resetBtn.addEventListener('click', () => {
+        // Remove dados e volta ao form
+        localStorage.removeItem('mqs_user_data');
+        warmDiv.classList.add('hidden');
+        form.classList.remove('hidden');
+        courseInput.value = ''; // Limpa input
+    });
+
+    // Seleção de Turno
     shiftBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const value = btn.getAttribute('data-value');
-            userSelection.shift = value;
-            
-            // Visual
-            shiftBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            userSelection.shift = btn.getAttribute('data-value');
+            updateVisuals(shiftBtns, userSelection.shift);
         });
     });
 
-    // 3. Lógica dos Chips de Período
+    // Seleção de Período
     periodBtns.forEach(btn => {
         btn.addEventListener('click', () => {
-            const value = btn.getAttribute('data-value');
-            userSelection.period = value;
-            
-            // Visual
-            periodBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
+            userSelection.period = btn.getAttribute('data-value');
+            updateVisuals(periodBtns, userSelection.period);
         });
     });
 
-    // 4. Ação Final: Ver Horários
+    // Botão "Ver Horários" (Submit)
     submitBtn.addEventListener('click', () => {
         const courseValue = courseInput.value.trim();
 
+        // Validação
         if (!courseValue) {
-            alert("Ei, mano! Esqueceu de colocar o curso!");
+            feedbackMsg.classList.remove('hidden');
+            courseInput.style.borderColor = '#C62828';
             courseInput.focus();
             return;
         }
 
         userSelection.course = courseValue;
 
-        // Salva no LocalStorage (Para a próxima vez)
+        // Salva e Navega
         localStorage.setItem('mqs_user_data', JSON.stringify(userSelection));
-
-        // --- NAVEGAÇÃO ---
-        // Aqui conectamos com a grade que você já tem.
-        // Certifique-se que o arquivo da grade se chama 'grade.html'
         window.location.href = 'grade.html';
     });
 
-    // Função auxiliar para marcar botões ativos ao carregar
-    function updateActiveState(nodeList, value) {
+    // Função visual auxiliar
+    function updateVisuals(nodeList, value) {
         nodeList.forEach(btn => {
             if (btn.getAttribute('data-value') === value) {
                 btn.classList.add('active');
@@ -79,4 +108,25 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // ============================================================
+    // 3. REQUISITO ACADÊMICO: FETCH COM .THEN
+    // (Dica do dia)
+    // ============================================================
+    const tipElement = document.getElementById('daily-tip-text');
+    
+    // Usando uma API pública de citações (fallback seguro)
+    fetch('https://api.quotable.io/random?tags=technology,wisdom&maxLength=60')
+        .then(response => {
+            if (!response.ok) throw new Error('Falha na rede');
+            return response.json();
+        })
+        .then(data => {
+            tipElement.textContent = `💡 "${data.content}"`;
+        })
+        .catch(error => {
+            // Fallback se estiver offline
+            console.log("Modo Offline ativado para dicas.");
+            tipElement.textContent = "💡 Dica: Mantenha o foco e beba água!";
+        });
 });
