@@ -30,16 +30,15 @@ body {
 }
 
 /* ==========================================================================
-   HEADER (VISUAL CARD FLUTUANTE - IGUAL HOME)
+   HEADER (VISUAL CARD FLUTUANTE - COMPACTO)
    ========================================================================== */
 .context-header {
-    /* Removemos o estilo de "barra colada" */
     position: relative; 
     background: transparent;
     backdrop-filter: none;
     border: none;
     
-    /* Damos espaço para o card flutuar */
+    /* Espaço para o card flutuar */
     padding: 24px 20px 0 20px; 
     width: 100%;
     z-index: 50;
@@ -48,12 +47,12 @@ body {
 .header-content {
     /* TRANSFORMAÇÃO EM CARD */
     background: #FFFFFF; /* Branco puro */
-    border-radius: 24px; /* Curvas suaves como na Home */
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08); /* Sombra idêntica à Home */
+    border-radius: 24px; /* Curvas suaves */
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08); /* Sombra igual da Home */
     
-    /* Tamanho e Espaçamento */
+    /* Tamanho Compacto (CORREÇÃO AQUI) */
     width: 100%;
-    max-width: 600px; /* Alinhado com a largura dos cards */
+    max-width: 600px; /* Mantém compacto mesmo no Desktop */
     margin: 0 auto;
     padding: 16px 24px;
     
@@ -62,15 +61,16 @@ body {
     align-items: center;
     gap: 16px;
     
-    /* Animação suave de entrada */
+    /* Animação */
     animation: slideDown 0.5s ease;
     transition: max-width 0.3s ease;
 }
 
-/* No Desktop, o header acompanha a largura da grade */
+/* Ajuste Desktop: Mantém o header compacto, mas centraliza o conteúdo */
 @media (min-width: 1024px) {
     .header-content {
-        max-width: 1400px; 
+        /* AQUI ESTAVA 1400px. Mudamos para manter o visual de card */
+        max-width: 600px; 
     }
 }
 
@@ -79,8 +79,8 @@ body {
     background: var(--primary);
     color: white;
     padding: 10px 14px;
-    border-radius: 12px; /* Quadrado arredondado */
-    font-weight: 800; /* Fonte grossa igual da Home */
+    border-radius: 12px;
+    font-weight: 800;
     font-size: 0.9rem;
     font-family: 'Outfit', sans-serif;
     letter-spacing: 0.5px;
@@ -109,7 +109,6 @@ body {
     font-weight: 500;
 }
 
-/* Animação para o card descer suavemente */
 @keyframes slideDown {
     from { transform: translateY(-20px); opacity: 0; }
     to { transform: translateY(0); opacity: 1; }
@@ -125,15 +124,11 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    
-    /* Padding lateral OBRIGATÓRIO (20px) */
     padding: 24px 20px 140px 20px; 
-    
-    /* Centraliza o bloco na tela */
     align-items: center; 
 }
 
-/* Card Vertical: Trava em 600px para não ficar gigante */
+/* Card Vertical: Trava em 600px */
 .schedule-view .day-card {
     width: 100%;
     max-width: 600px; 
@@ -144,17 +139,15 @@ body {
 .schedule-view--horizontal {
     display: grid;
     grid-auto-flow: column;
-    grid-auto-columns: min(85vw, 400px); /* 85% da tela ou max 400px */
+    grid-auto-columns: min(85vw, 400px);
     gap: 16px;
     
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     
-    /* Padding lateral para o scroll não cortar */
     padding-left: 20px;
     padding-right: 20px;
     
-    /* Remove a centralização forçada do vertical */
     align-items: start;
     flex-direction: unset;
 }
@@ -169,19 +162,17 @@ body {
 
 /* 3. MODO DESKTOP (Telas > 1024px) */
 @media (min-width: 1024px) {
-    /* Forçamos Grid no Desktop */
+    /* Grade de Aulas expandida */
     .schedule-view,
     .schedule-view--horizontal {
         display: grid;
         grid-template-columns: repeat(5, minmax(250px, 300px));
         gap: 24px;
         
-        /* Centraliza o GRUPO de cards na tela */
         width: fit-content;
         margin: 0 auto;
         justify-content: center;
         
-        /* Mais espaço no desktop */
         padding: 40px;
         padding-bottom: 120px;
         
@@ -206,7 +197,7 @@ body {
     padding: var(--spacing-p4);
     box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
     transition: 0.3s;
-    border: 2px solid transparent; /* Evita pulo ao adicionar borda */
+    border: 2px solid transparent;
 }
 
 .day-card.is-today {
@@ -271,22 +262,17 @@ body {
     position: fixed;
     bottom: 24px;
     left: 0; right: 0;
-    margin: 0 auto; /* Centralização Robusta */
-    
+    margin: 0 auto;
     width: max-content;
     max-width: 90vw;
-    
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    
     padding: 8px 8px 8px 24px;
     border-radius: 9999px;
-    
     display: flex;
     align-items: center;
     gap: 16px;
-    
     box-shadow: 0 8px 32px rgba(0,0,0,0.15);
     z-index: 9999;
 }
@@ -317,7 +303,6 @@ body {
     white-space: nowrap;
 }
 
-/* Animação */
 @keyframes pulse-border {
     0% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0.4); }
     70% { box-shadow: 0 0 0 10px rgba(0, 137, 123, 0); }
