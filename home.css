@@ -213,15 +213,38 @@ body {
 
 .horizontal-scroll-wrapper {
     position: relative;
-    margin: 0 -20px;
-    padding: 0 20px;
+    /* Expande lateralmente para o scroll ficar elegante */
+    margin: 0 -12px;
+    width: calc(100% + 24px);
+    
+    /* RESPIRO VERTICAL: 
+       Isso resolve o "amassado". Dá espaço para o botão crescer 
+       sem encostar no label "Período" ou ser cortado embaixo. */
+    padding-top: 8px;
+    padding-bottom: 24px; 
+    
+    /* Garante que nada vaze */
+    overflow: hidden; 
 }
+
 .chips-container {
     display: flex;
     gap: 12px;
+    
+    /* Habilita o scroll */
     overflow-x: auto;
-    padding-bottom: 10px;
+    
+    /* RESPIRO LATERAL IMPORTANTE:
+       padding-left: Garante que o 1º botão não seja cortado ao crescer.
+       padding-bottom: Espaço extra para a sombra não ser cortada. */
+    padding: 4px 20px 5px 20px;
+    
+    /* Esconde barra de rolagem */
     scrollbar-width: none;
+    -ms-overflow-style: none;
+    
+    /* Centraliza os botões na linha */
+    align-items: center; 
 }
 .chips-container::-webkit-scrollbar { display: none; }
 
@@ -229,20 +252,39 @@ body {
     width: 48px;
     height: 48px;
     border-radius: 50%;
-    background: white;
-    border: 1px solid var(--text-muted);
-    color: var(--text-main);
+    
+    /* ESTILO MATERIAL 3 (TONAL) */
+    background: #F3F4F6; /* Cinza suave (Surface Variant) */
+    border: none;
+    color: var(--text-muted);
+    
     font-weight: 600;
     font-size: 1rem;
+    font-family: 'Outfit', sans-serif;
+    
     flex-shrink: 0;
     cursor: pointer;
-    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    /* Transição suave para o efeito de crescimento */
+    transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
+
+.chip-btn:hover {
+    background: #E0E0E0;
+}
+
 .chip-btn.active {
     background: var(--primary);
-    border-color: var(--primary);
     color: white;
-    transform: scale(1.05);
+    
+    /* Scale: O botão cresce para destacar */
+    transform: scale(1.15);
+    
+    /* Sombra colorida suave (Glow) */
+    box-shadow: 0 2px 5px rgba(0, 137, 123, 0.25);
 }
 
 .scroll-fade {
