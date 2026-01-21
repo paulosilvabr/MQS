@@ -29,52 +29,96 @@ body {
     overflow-x: hidden;
 }
 
-/* --- HEADER SINCRONIZADO --- */
+/* ==========================================================================
+   HEADER (VISUAL CARD FLUTUANTE - IGUAL HOME)
+   ========================================================================== */
 .context-header {
-    position: sticky;
-    top: 0;
+    /* Removemos o estilo de "barra colada" */
+    position: relative; 
+    background: transparent;
+    backdrop-filter: none;
+    border: none;
+    
+    /* Damos espaço para o card flutuar */
+    padding: 24px 20px 0 20px; 
+    width: 100%;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(12px);
-    padding: 1rem 1.5rem;
-    border-bottom: 1px solid rgba(0,0,0,0.05);
 }
 
 .header-content {
-    /* CORREÇÃO DE ALINHAMENTO: */
-    /* No mobile, ele segura em 600px para alinhar com os cards verticais */
+    /* TRANSFORMAÇÃO EM CARD */
+    background: #FFFFFF; /* Branco puro */
+    border-radius: 24px; /* Curvas suaves como na Home */
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08); /* Sombra idêntica à Home */
+    
+    /* Tamanho e Espaçamento */
     width: 100%;
-    max-width: 600px; 
+    max-width: 600px; /* Alinhado com a largura dos cards */
     margin: 0 auto;
+    padding: 16px 24px;
+    
+    /* Layout Interno */
     display: flex;
     align-items: center;
-    gap: 1rem;
-    transition: max-width 0.3s ease; /* Animação suave se mudar de tamanho */
+    gap: 16px;
+    
+    /* Animação suave de entrada */
+    animation: slideDown 0.5s ease;
+    transition: max-width 0.3s ease;
 }
 
-/* No Desktop, o cabeçalho expande para acompanhar a grade larga */
+/* No Desktop, o header acompanha a largura da grade */
 @media (min-width: 1024px) {
     .header-content {
-        max-width: 1400px; /* Alinha com a grade estendida */
-        padding-left: 40px; /* Alinha visualmente com o padding da grade */
-        padding-right: 40px;
+        max-width: 1400px; 
     }
 }
 
+/* Badge MQS (Pequeno) */
 .logo-small {
     background: var(--primary);
     color: white;
-    padding: 8px 12px;
-    border-radius: 8px;
-    font-weight: 700;
-    font-size: 0.8rem;
+    padding: 10px 14px;
+    border-radius: 12px; /* Quadrado arredondado */
+    font-weight: 800; /* Fonte grossa igual da Home */
+    font-size: 0.9rem;
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
 }
 
-.user-context h2 { font-size: 1rem; margin: 0; }
-.user-context span { font-size: 0.8rem; color: var(--text-muted); }
+/* Textos */
+.user-context {
+    display: flex;
+    flex-direction: column;
+}
+
+.user-context h2 { 
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem; 
+    font-weight: 700;
+    color: var(--text-main); 
+    margin: 0; 
+    line-height: 1.2;
+}
+
+.user-context span { 
+    font-family: 'Roboto', sans-serif;
+    font-size: 0.85rem; 
+    color: var(--text-muted); 
+    font-weight: 500;
+}
+
+/* Animação para o card descer suavemente */
+@keyframes slideDown {
+    from { transform: translateY(-20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
 
 
-/* --- SISTEMA DE LAYOUT (ALINHAMENTO E RESPIRO) --- */
+/* ==========================================================================
+   SISTEMA DE LAYOUT (ALINHAMENTO E RESPIRO)
+   ========================================================================== */
 
 /* 1. MODO VERTICAL (Mobile/Tablet Padrão) */
 .schedule-view {
