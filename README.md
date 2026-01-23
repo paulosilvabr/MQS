@@ -2,76 +2,132 @@
 
 > **Disciplina:** Introdução à Programação Web (Projeto Integrador)
 > **Status:** 🚀 Finalizado (MVP)
-> **Deploy:** [Insira o Link do Vercel/Netlify aqui se houver]
+> **Deploy:** [https://diegoaquinosza.github.io/MQS/]
 
 ## 1. O Projeto
-O **MQS** é uma Aplicação Web *Mobile-First* (SPA) desenvolvida para reduzir a ansiedade acadêmica. O objetivo é eliminar a fricção que estudantes enfrentam para encontrar sua sala e grade horária, substituindo sistemas de login complexos por uma interface de "acesso instantâneo".
+O **MQS** é uma Aplicação Web *Mobile-First* desenvolvida com foco em **Eficiência de UX** e redução de carga cognitiva. O objetivo central é eliminar a "fricção tecnológica" que estudantes enfrentam para acessar sua grade horária, substituindo portais burocráticos por uma interface de acesso instantâneo.
+
+**📉 O Problema:**
+A desproporção entre esforço e resultado nos sistemas acadêmicos tradicionais. Para responder à simples pergunta *"Onde é a minha aula agora?"*, o aluno enfrenta barreiras desnecessárias: logins repetitivos, menus densos e interfaces não responsivas, o que gera atrasos e ansiedade.
+
+**🟢 A Solução:**
+Um facilitador logístico que atua como um "colega digital". Através de persistência de dados local, o MQS memoriza o contexto do aluno e entrega a informação da sala em segundos, sem burocracia.
 
 ### 📸 Screenshots
 | Tela Inicial (Onboarding) | Grade Horária (Card) |
 |:---:|:---:|
 | <img src="./assets/print_home.png" width="300" alt="Tela Inicial"> | <img src="./assets/print_grade.png" width="300" alt="Visualização da Grade"> |
-*(Adicione seus prints na pasta assets e ajuste os nomes acima)*
 
 ---
 
 ## 2. Diferenciais Técnicos & UX
+O projeto não foca apenas em código, mas na experiência do usuário (UX):
+* **Lei de Hick:** Redução de opções na tela inicial para acelerar a decisão.
 * **Persistência de Contexto:** O sistema utiliza `localStorage` para lembrar o curso e turno do aluno. Ao reabrir o app, ele pula a configuração e vai direto ao que importa ("Warm Start").
-* **Design "Anti-Ansiedade":** Interface baseada no *Material Design 3*, utilizando cores frias (Teal/Ice Blue) e feedbacks visuais claros para reduzir a carga cognitiva.
+* **Design "Anti-Ansiedade":** Interface baseada no *Material Design 3 Expressive*, utilizando cores frias (Teal/Ice Blue) e feedbacks visuais claros para reduzir a carga cognitiva.
 * **Arquitetura Vanilla:** Desenvolvido sem frameworks (React/Vue), garantindo leveza e domínio total do JavaScript ES6+.
 
 ---
 
-## 3. Checklist de Conformidade (Rubrica)
-Conforme solicitado nas instruções do projeto:
-
-- [x] **Estruturas Básicas:** Uso de `const`/`let`, condicionais e laços.
-- [x] **Arrays e Objetos:** Manipulação de estrutura JSON complexa.
-- [x] **Métodos de Array:** Aplicação de `.find()` (busca), `.filter()` (validação) e `.map()` (renderização).
-- [x] **DOM Dinâmico:** Injeção de HTML via JavaScript (sem *page reload*).
-- [x] **Assincronicidade (Fluxo 1):** Uso de `async/await` com `try/catch` para carregar o banco de dados (`db.json`).
-- [x] **Assincronicidade (Fluxo 2):** Uso de `.then/.catch` para carregar dicas aleatórias (`tip_of_day.json`).
-- [x] **Web Storage:** Persistência de preferências do usuário.
-- [x] **API HTML5 Extra:** Funcionalidade de Screenshot com **Canvas API** (via `html2canvas`) e **Web Share API**.
+## 3. Funcionalidades Chave
+1.  **Onboarding Inteligente:** Filtros de Curso/Turno/Período com UX otimizada (Scroll horizontal e Segmented Buttons).
+2.  **Dashboard "Zen":** Visualização clara da aula atual com destaque visual, focada na redução de ansiedade.
+3.  **Toggle View:** Alternância fluida entre visualização Vertical (Timeline mobile) e Horizontal (Grade completa).
+4.  **Snap & Share:** Geração automática de uma imagem (PNG) da grade horária para compartilhamento via WhatsApp/Galeria.
+5.  **Warm Start (Persistência):** O App memoriza o contexto do aluno via `localStorage`, carregando a grade instantaneamente em acessos futuros sem necessidade de reconfiguração.
 
 ---
 
-## 4. Estrutura de Arquivos
+## 4. Stack Tecnológico & Ferramentas
+Este projeto foi construído seguindo a metodologia **"Vanilla First"**, garantindo performance e domínio da linguagem sem dependência de frameworks.
 
-* `index.html`: Tela de Onboarding.
-* `grade.html`: Tela de Visualização da Grade.
-* `styles.css`: Estilos globais e componentes.
-* `home.css`: Estilos específicos da home page.
-* `app.js`: Lógica da grade (Async/Await, Renderização).
-* `home.js`: Lógica da home (LocalStorage, Validação).
-* `db.json`: Banco de dados simulado.
-* `tip_of_day.json`: Arquivo auxiliar (segundo fluxo assíncrono).
+* **Core (O Código):** HTML5 Semântico, CSS3 (Variáveis, Flexbox, Grid, BEM) e JavaScript (ES6+).
+* **Bibliotecas:** `html2canvas` (Integração pontual para funcionalidade de screenshot).
+* **Design & Prototipação:**
+    * **Figma:** Mockups de alta fidelidade e definição do Design System.
+    * **Ferramentas de Ideação (AI):** Uso de Stitch/AI Studio para *brainstorming* de fluxos de usuário.
+* **Ambiente de Desenvolvimento (IDE):** VS Code
+* **Apoio Técnico (Pair Programming):** Google Gemini.
+    * *Função:* Atuou na revisão de sintaxe, otimização de queries (ex: métodos de array) e explicação de conceitos avançados, simulando um ambiente de *Code Review* profissional.
+
+## 5. Mapeamento Técnico (Conformidade com a Rubrica)
+
+Este projeto foi construído com **JavaScript Vanilla (ES6+)**, HTML5 Semântico e CSS3 Moderno, atendendo rigorosamente aos requisitos:
+
+### ✅ A. Estruturas e Lógica de Arrays
+Uso intensivo de métodos de Array para manipulação de dados no arquivo `app.js`:
+1.  **`.find()`**: Utilizado para localizar o Curso específico dentro do banco de dados gigante (`db.json`).
+2.  **`.filter()`**: Utilizado para higienizar a grade, removendo dias que não possuem aulas cadastradas antes da renderização.
+3.  **`.map()`**: Utilizado para transformar os dados brutos (JSON) em componentes visuais (HTML Cards) na tela.
+
+### ✅ B. Assincronicidade (Dois Fluxos Distintos)
+Conforme exigido, o projeto implementa duas estratégias de consumo de dados:
+* **Fluxo 1 (`async/await` com `try/catch`):** Implementado no `app.js` (`fetchSchedule`) para buscar os dados críticos da grade (`db.json`). É robusto e trata erros de conexão.
+* **Fluxo 2 (`.then/.catch`):** Implementado no `home.js`. Busca o arquivo `tip_of_day.json` para exibir uma frase motivacional aleatória. Se falhar, exibe uma frase padrão (fallback).
+
+### ✅ C. Persistência de Dados
+* **Web Storage:** O objeto `userContext` (Curso, Turno, Período) é salvo no `localStorage`. Isso permite que a aplicação mantenha o estado entre sessões, simulando a experiência de um aplicativo nativo.
+
+### ✅ D. API HTML5 Extra
+* **Web Share API + Canvas:** Implementação da funcionalidade "Compartilhar Grade". O app converte a grade HTML em uma imagem PNG (usando `html2canvas`) e invoca o compartilhamento nativo do celular (WhatsApp, Instagram, etc.).
+
+---
+
+## 6. Estrutura de Arquivos
+A arquitetura segue o princípio de Separação de Preocupações (SoC):
+
+* `index.html`: Interface de Onboarding (Formulário).
+* `grade.html`: Interface de Visualização (Grade).
+* `assets/`: Imagens e ícones.
+* `css/`:
+    * `styles.css`: Design System global e componentes da grade.
+    * `home.css`: Estilização específica da Home.
+* `js/`:
+    * `app.js`: Motor da grade (Lógica complexa, Async/Await).
+    * `home.js`: Controlador da Home (Validação, LocalStorage).
+* `data/`:
+    * `db.json`: Banco de dados relacional simulado (Cursos -> Turnos -> Períodos).
+    * `tip_of_day.json`: Micro-serviço de dados para frases.
 
 ---
 
-## 5. Limitações e Decisões Técnicas
-* **Dados Estáticos:** Como é uma aplicação *Client-Side*, os dados são lidos de um JSON local. Alterações na grade não são salvas em um servidor real.
-* **Segurança:** A API `navigator.share` funciona apenas em contextos seguros (HTTPS) ou `localhost`.
-* **CORS:** Para o funcionamento correto dos arquivos JSON locais, a aplicação deve ser rodada via servidor HTTP (ex: Live Server), e não diretamente pelo sistema de arquivos.
+## 7. Decisões Técnicas e Limitações Conhecidas
+
+* **Arquitetura de Dados (Mock):** O projeto adota uma arquitetura *Client-Side* pura. Para simular o consumo de uma API real sem a complexidade de um Back-End, utilizamos arquivos JSON locais (`db.json`) como fonte de dados.
+    * *Implicação:* A aplicação opera em modo de "Somente Leitura" (Read-Only) para a grade. Alterações nos dados exigem edição direta no código-fonte.
+
+* **Escopo de Persistência:** Para eliminar a barreira de login (fricção), optamos por não utilizar autenticação de usuário. A persistência de estado (Curso/Turno escolhidos) é gerenciada exclusivamente via `localStorage` no navegador do dispositivo.
+
+* **Restrições de Segurança (CORS & HTTPS):**
+    * **CORS:** O método `fetch` para arquivos locais é bloqueado por segurança em navegadores modernos se aberto via protocolo de arquivo (`file://`). A aplicação necessita de um servidor HTTP local (como o Live Server) para funcionar corretamente.
+    * **Web Share API:** A funcionalidade de compartilhamento nativo depende de contextos seguros (HTTPS) ou `localhost`.
 
 ---
 
-## 6. Como Executar
+## 8. Como Executar
+Devido às políticas de segurança dos navegadores (CORS) para requisições `fetch` locais:
 
-1.  Baixe este repositório ou descompacte o arquivo ZIP.
-2.  Não é necessário `npm install` (Projeto Vanilla).
-3.  Abra o arquivo `index.html` em seu navegador preferido.
-    * *Dica:* Utilize o "Modo Responsivo" (F12) do navegador para testar a experiência mobile.
-    * *Nota:* Para testar o `fetch` do JSON localmente sem erros de CORS, recomenda-se usar uma extensão como "Live Server" ou rodar `npx http-server`.
-
----
-
-## 7. Declaração de Integridade Acadêmica
-Declaro que este código foi desenvolvido majoritariamente por mim, com apoio de ferramentas de IA (Google Gemini) para:
-1.  Geração de massa de dados fictícia (`db.json`).
-2.  Refinamento de CSS para compatibilidade Cross-Browser.
-3.  Revisão de lógica para otimização de laços e condicionais.
-Todas as decisões arquiteturais (BEM, escolha de bibliotecas, UX Flow) foram tomadas e validadas manualmente pelo aluno.
+1.  Baixe o código fonte.
+2.  Não abra diretamente pelo arquivo (file://).
+3.  Utilize um servidor local. Se tiver o VS Code instalado:
+    * Instale a extensão **Live Server**.
+    * Clique em "Go Live" no canto inferior direito.
+4.  Ou via terminal (Node.js):
+    ```bash
+    npx http-server .
 
 ---
-**Desenvolvido por:** Diego Aquino Souza - IFTO
+
+## 9. Declaração de Integridade Acadêmica e Autoria
+Declaro que este código foi desenvolvido majoritariamente por mim. Ferramentas de Inteligência Artificial (Google Gemini) foram utilizadas de forma ética, atuando estritamente como **Tutor Digital e Apoio à Depuração** para:
+
+1.  **Análise de Erros e Bugs:** Auxílio na identificação e correção de falhas de sintaxe ou lógica em trechos específicos do código.
+2.  **Conceituação Técnica:** Explicação de novos conceitos e padrões de implementação (como o uso correto de `async/await` e manipulação do DOM) para aplicação no projeto.
+
+**Autoria de Design e Dados:**
+Ressalto que toda a **Identidade Visual (UI/UX)** foi desenhada manualmente pelo aluno (via Figma e outras ferramentas) e que a **Base de Dados (`db.json`)** foi construída com dados reais da grade horária do curso, sem geração automática.
+
+Todas as decisões arquiteturais e a implementação final foram validadas pelo aluno, garantindo a originalidade do trabalho.
+
+---
+**Desenvolvido por:** Diego Aquino Souza
