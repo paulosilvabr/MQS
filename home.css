@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary: #00897B;          
+    --primary: #00897bd0;          
     --primary-hover: #00897B;
-    --bg-body: #F0F4F8;
+    --bg-body: hsl(210, 36%, 95%);
     --surface: #FFFFFF;
     --text-main: #006c61;
     --text-muted: #8E8E93;
@@ -43,7 +43,7 @@ body {
     border-radius: var(--radius-card);
     padding: 0;
     text-align: center;
-    box-shadow: var(--shadow-hero);
+    box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
     position: relative;
     overflow: hidden;
     height: 180px;

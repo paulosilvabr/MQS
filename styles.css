@@ -2,14 +2,14 @@
 
 :root {
     /* --- PALETA ZEN --- */
-    --primary: #00897B;
+    --primary: #00897bd0;
     --primary-light: #c8e5e4;
     --primary-medium: #a2ccc9;
     --primary-dark: #004D40;
     --surface-glass: rgba(255, 255, 255, 0.901);
     --surface: #FFFFFF;
     --bg-body: #F0F4F8;
-    --text-main: #263238;
+    --text-main: #006c61;
     --text-muted: #607D8B;
     
     /* --- GEOMETRIA --- */
@@ -38,7 +38,7 @@ body {
     background: #FFFFFF;
     border-radius: 24px;
     padding: 0; 
-    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
     position: relative;
     overflow: hidden;
     height: 180px; 
