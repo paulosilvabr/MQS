@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
     /* --- PALETA ZEN --- */
     --primary: #00897B;
@@ -20,7 +22,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Outfit', 'Roboto', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-body);
     color: var(--text-main);
     line-height: 1.6;
@@ -266,7 +268,7 @@ body {
     align-items: center;
     color: var(--primary-dark);
     font-size: 0.875rem;
-    font-weight: 300;
+    font-weight: 400;
     margin-bottom: 12px;
 }
 

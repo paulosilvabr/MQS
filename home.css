@@ -1,22 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
 :root {
     --primary: #00897B;          
     --primary-hover: #00897B;
     --bg-body: #F0F4F8;
     --surface: #FFFFFF;
-    --text-main: #1F2937;
-    --text-muted: #6B7280;
+    --text-main: #006c61;
+    --text-muted: #8E8E93;
     --border-light: #E5E7EB;
-    --radius-pill: 999px;
+    --radius-pill: 50px;
     --radius-card: 32px;
-    --shadow-hero: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+    --shadow-hero: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Outfit', sans-serif;
+   font-family: 'Inter', sans-serif;
     background-color: var(--bg-body);
-    background-image: radial-gradient(circle at top right, #E0F2F1 0%, transparent 40%);
+    background-image: none;
     color: var(--text-main);
     display: flex;
     justify-content: center;
@@ -48,18 +50,18 @@ body {
 
 .brand-title {
     font-family: 'Outfit', sans-serif;
-    font-weight: 800;
-    font-size: 3.5rem;
+    font-weight: 700;
+    font-size: 3rem;
     color: var(--primary);
-    line-height: 1;
-    letter-spacing: -1px;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
     margin-bottom: 8px;
 }
 
 .brand-subtitle {
-    font-size: 1rem;
-    color: var(--text-main);
-    font-weight: 500;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    font-weight: 400;
 }
 
 /* --- WARM CARD (COM DICA) --- */
@@ -151,8 +153,8 @@ body {
 
 .label-zen {
     display: block;
-    font-size: 0.95rem;
-    font-weight: 600;
+    font-size: 0.90rem;
+    font-weight: 500;
     color: var(--text-main);
     margin-bottom: 10px;
     margin-left: 4px;
@@ -165,34 +167,47 @@ body {
 }
 .input-wrapper .icon {
     position: absolute;
-    left: 20px;
-    color: #9CA3AF;
-    font-size: 20px;
+    left: 16px;
+    color: var(--text-muted);
+    font-size: 24px;
+    pointer-events: none;
 }
 .input-wrapper input {
     width: 100%;
+    height: 50px;
     padding: 16px 16px 16px 52px;
-    border: 1px solid var(--text-muted);
+    border: 1px solid transparent;
     border-radius: var(--radius-pill);
     font-family: 'Roboto', sans-serif;
     font-size: 1rem;
     color: var(--text-main);
-    background: transparent;
+    background: #ffffff;
     transition: all 0.2s;
+    box-shadow: var(--shadow-hero);
 }
 .input-wrapper input:focus {
     outline: none;
     border-color: var(--primary);
     border-width: 2px;
     padding: 15px 15px 15px 51px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    background: #FFFFFF;
+}
+
+.input-wrapper input::placeholder {
+    color: var(--text-muted); /* Usa o cinza padrão do seu tema */
+    opacity: 1; /* Correção para o Firefox (que aplica transparência por padrão) */
+    font-weight: 400; /* Garante que o exemplo fique leve */
 }
 
 .segmented-control {
     display: flex;
-    background: transparent;
-    border: 1px solid var(--text-muted);
+    background: #ffffff;
+    border: none;
     padding: 4px;
     border-radius: var(--radius-pill);
+    height: 50px;
+    box-shadow: var(--shadow-hero);
 }
 .segment-btn {
     flex: 1;
@@ -201,14 +216,17 @@ body {
     border-radius: var(--radius-pill);
     background: transparent;
     color: var(--text-muted);
+    font-size: 15px;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s;
 }
 .segment-btn.active {
-    background: var(--primary);
-    color: white;
+    background: var(--primary); /* Branco eleva o botão */
+    color: #ffffff; /* Texto verde */
     font-weight: 600;
+    /* Sombra suave para dar profundidade (Layer) */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .horizontal-scroll-wrapper {
@@ -249,14 +267,15 @@ body {
 .chips-container::-webkit-scrollbar { display: none; }
 
 .chip-btn {
-    width: 48px;
-    height: 48px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
     
     /* ESTILO MATERIAL 3 (TONAL) */
-    background: #F3F4F6; /* Cinza suave (Surface Variant) */
+    background: #ffffff; /* Cinza suave (Surface Variant) */
     border: none;
     color: var(--text-muted);
+    box-shadow: var(--shadow-hero);
     
     font-weight: 600;
     font-size: 1rem;
@@ -273,7 +292,7 @@ body {
 }
 
 .chip-btn:hover {
-    background: #E0E0E0;
+    background: #eefcec;
 }
 
 .chip-btn.active {
@@ -284,7 +303,7 @@ body {
     transform: scale(1.15);
     
     /* Sombra colorida suave (Glow) */
-    box-shadow: 0 2px 5px rgba(0, 137, 123, 0.25);
+    /box-shadow: 0 2px 5px rgba(0, 137, 123, 0.25);
 }
 
 .scroll-fade {
@@ -311,16 +330,19 @@ body {
 
 .cta-primary {
     width: 100%;
+    height: 56px;
     background: var(--primary);
     color: white;
     border: none;
     padding: 16px;
     border-radius: var(--radius-pill);
-    font-size: 1.1rem;
+    font-size: 17px;
     font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s;
-    font-family: 'Outfit', sans-serif;
+    transition: background 0.2s, transform 0.1s;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 12px rgba(26, 83, 69, 0.25);
+    
 }
 .cta-primary:hover { background: var(--primary-hover); }
 .cta-primary:active { transform: scale(0.98); }
