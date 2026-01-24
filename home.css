@@ -41,11 +41,19 @@ body {
 .hero-card {
     background: var(--surface);
     border-radius: var(--radius-card);
-    padding: 32px 20px;
+    padding: 0;
     text-align: center;
     box-shadow: var(--shadow-hero);
     position: relative;
     overflow: hidden;
+    height: 180px;
+}
+
+.hero-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block; /* Remove espaços brancos extras */
 }
 
 .brand-title {
@@ -194,11 +202,7 @@ body {
     background: #FFFFFF;
 }
 
-.input-wrapper input::placeholder {
-    color: var(--text-muted); /* Usa o cinza padrão do seu tema */
-    opacity: 1; /* Correção para o Firefox (que aplica transparência por padrão) */
-    font-weight: 400; /* Garante que o exemplo fique leve */
-}
+
 
 .segmented-control {
     display: flex;
@@ -303,7 +307,7 @@ body {
     transform: scale(1.15);
     
     /* Sombra colorida suave (Glow) */
-    /box-shadow: 0 2px 5px rgba(0, 137, 123, 0.25);
+    box-shadow: 0 2px 5px rgba(0, 137, 123, 0.25);
 }
 
 .scroll-fade {
