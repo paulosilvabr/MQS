@@ -210,6 +210,15 @@ body {
     height: 100%;
 }
 
+/* 2.1 ZONA DE ESTABILIDADE (Tablets e Janelas Médias) */
+/* Resolve o efeito "esticado" fixando a largura em um valor harmônico */
+@media (min-width: 500px) and (max-width: 1023px) {
+    .schedule-view .day-card {
+        width: 270px;      /* Tamanho fixo, próximo ao do Desktop */
+        max-width: 270px;  /* Força bruta para impedir o estiramento */
+    }
+}
+
 
 /* 3. MODO DESKTOP */
 @media (min-width: 1024px) {
@@ -219,14 +228,14 @@ body {
         display: grid;
         /* Força os cards a criarem novas colunas lateralmente, nunca linhas */
         grid-auto-flow: column;
-        grid-auto-columns: minmax(250px, 300px);
+        grid-auto-columns: minmax(270px, 300px);
         gap: 24px;
 
         width: 100%;
         max-width: 100%;
         /* Garante que o container não ultrapasse a tela */
         margin: 0 auto;
-        justify-content: center;
+        justify-content: start;
 
         overflow-x: auto;
         /* Base para o scroll e para as setas funcionarem */
@@ -474,10 +483,63 @@ body {
     animation: spin 1s linear infinite;
 }
 
-/* --- SETAS DE NAVEGAÇÃO DESKTOP --- */
+/* --- SETAS DE NAVEGAÇÃO (Globais para Mouse) --- */
 .nav-arrow {
-    display: none;
-    /* Escondido no mobile */
+    display: flex;
+    position: absolute;
+    /* 🧠 ALINHAMENTO UNIFICADO: 14% coloca a seta na linha do Título/Intervalo */
+    top: 11%; 
+    transform: translateY(-50%);
+    z-index: 100;
+
+    background: var(--surface);
+    color: var(--primary-dark);
+    border: 2px solid var(--primary-light);
+    width: 60px; /* Um pouco menor em telas pequenas para não cobrir muito */
+    height: 60px;
+    border-radius: 50%;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-arrow:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow.left { left: 8px; }
+.nav-arrow.right { right: 8px; }
+.nav-arrow span { font-size: 28px; }
+
+/* Classe para esconder */
+.nav-arrow.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.8);
+}
+
+/* 🧠 NEURO-ADAPTAÇÃO: Esconde as setas APENAS se o dispositivo for de toque (Dedo) */
+@media (pointer: coarse) {
+    .nav-arrow { display: none !important; }
+}
+
+/* Ajuste específico para Desktop (Setas maiores e posição refinada) */
+@media (min-width: 1024px) {
+    .nav-arrow {
+        width: 60px;
+        height: 60px;
+        top: 14%; /* Seu ajuste personalizado de altura */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .nav-arrow span { font-size: 32px; }
+    .nav-arrow.left { left: 10px; }
+    .nav-arrow.right { right: 10px; }
 }
 
 @media (min-width: 1024px) {

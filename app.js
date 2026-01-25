@@ -200,9 +200,18 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (container && btnLeft && btnRight) {
-        // Eventos de clique
-        btnLeft.onclick = () => container.scrollBy({ left: -350, behavior: 'smooth' });
-        btnRight.onclick = () => container.scrollBy({ left: 350, behavior: 'smooth' });
+
+        // 🧠 SCROLL DINÂMICO: Calcula o tamanho exato do passo (Card + Gap)
+        // Isso garante que o clique avance 1 card perfeito, seja no Desktop (300px) ou Tablet (270px)
+        const getScrollStep = () => {
+            const card = container.querySelector('.day-card');
+            // Pega a largura real do card na tela + 24px de gap (definido no CSS)
+            return card ? card.offsetWidth + 24 : 300;
+        };
+
+        // Eventos de clique (Usando a função dinâmica)
+        btnLeft.onclick = () => container.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+        btnRight.onclick = () => container.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
 
         // Monitora o scroll para atualizar as setas
         container.addEventListener('scroll', updateArrows);
