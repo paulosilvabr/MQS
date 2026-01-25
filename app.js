@@ -3,13 +3,13 @@
 // =================================================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // --- ELEMENTOS ---
     const scheduleView = document.getElementById('schedule-view');
     const toggleBtn = document.getElementById('btn-toggle-view');
     const shareBtn = document.getElementById('btn-share');
     const searchBtn = document.getElementById('btn-search');
-    
+
     // Elementos de Texto do Cabeçalho
     const displayCourse = document.getElementById('display-course');
     const displayPeriod = document.getElementById('display-period');
@@ -22,12 +22,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (savedData) {
         userContext = JSON.parse(savedData);
-        
+
         // Atualiza UI do Cabeçalho
         displayCourse.textContent = userContext.course;
         const shiftDisplay = userContext.shift.charAt(0).toUpperCase() + userContext.shift.slice(1);
         displayPeriod.textContent = `${userContext.period}º Período • ${shiftDisplay}`;
-        
+
         // Inicia a busca
         fetchSchedule(userContext);
 
@@ -50,9 +50,9 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const response = await fetch('db.json');
             if (!response.ok) throw new Error('Erro de conexão');
-            
+
             const database = await response.json();
-            
+
             // 1. Acha o Curso (Método FIND)
             const courseData = database.courses.find(c => c.name === context.course);
             if (!courseData) throw new Error('Curso não encontrado.');
@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. RENDERIZAÇÃO
     // =========================================================
     function renderSchedule(data) {
-        const currentDay = new Date().getDay(); 
+        const currentDay = new Date().getDay();
         const weekDays = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
         const todayName = weekDays[currentDay];
 
@@ -100,22 +100,22 @@ document.addEventListener('DOMContentLoaded', () => {
         // Mapeia os dados válidos (Método MAP)
         scheduleView.innerHTML = validDays.map((dayData, index) => {
             const isToday = dayData.day === todayName;
-            
+
             return `
             <article class="day-card ${isToday ? 'is-today' : ''}">
                 <div class="day-card__title">${dayData.day}</div>
                 <div class="classes-list">
                     ${dayData.items.map(item => {
-                        // Lógica de Renderização Original
-                        if (item.type === 'interval') {
-                            return `
+                // Lógica de Renderização Original
+                if (item.type === 'interval') {
+                    return `
                             <div class="interval-pill">
                                 <span>${item.timeStart}</span>
                                 <span>${item.label}</span>
                                 <span>${item.timeEnd}</span>
                             </div>`;
-                        } else {
-                            return `
+                } else {
+                    return `
                             <div class="class-item">
                                 <p class="class-item__subject">${item.subject}</p>
                                 <div class="class-item__details">
@@ -125,13 +125,16 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                                 <p class="class-item__prof">${item.prof}</p>
                             </div>`;
-                        }
-                    }).join('')}
+                }
+            }).join('')}
                 </div>
             </article>
             `;
         }).join('');
     }
+
+    // 🧠 Gatilho Neuro-Visual: Garante que as setas acordem após os cards nascerem
+    setTimeout(updateArrows, 100);
 
     // 4. Funcionalidades Extras
     toggleBtn.addEventListener('click', () => {
@@ -150,7 +153,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     shareBtn.addEventListener('click', async () => {
         const dock = document.querySelector('.floating-dock');
-        dock.style.display = 'none'; 
+        dock.style.display = 'none';
         try {
             const canvas = await html2canvas(document.getElementById("app-viewport"), {
                 backgroundColor: "#F0F4F8", scale: 2
@@ -169,4 +172,44 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (e) { console.error(e); }
         finally { dock.style.display = 'flex'; }
     });
+
+    const container = document.getElementById('schedule-view');
+    const btnLeft = document.getElementById('scroll-left');
+    const btnRight = document.getElementById('scroll-right');
+
+    function updateArrows() {
+        if (!container || !btnLeft || !btnRight) return;
+
+        // Força o navegador a recalcular o layout antes da checagem
+        const scrollWidth = container.scrollWidth;
+        const clientWidth = container.offsetWidth;
+        const scrollLeft = container.scrollLeft;
+
+        // Neuro-Tolerância: Ignora pequenas diferenças de arredondamento (até 20px)
+        // que o olho humano não percebe, mas que ativariam a seta indevidamente.
+        const isScrollable = scrollWidth > (clientWidth + 20);
+
+        if (!isScrollable) {
+            btnLeft.classList.add('is-hidden');
+            btnRight.classList.add('is-hidden');
+        } else {
+            // Lógica de visibilidade baseada na posição do scroll
+            btnLeft.classList.toggle('is-hidden', scrollLeft <= 5);
+            btnRight.classList.toggle('is-hidden', scrollLeft >= (scrollWidth - clientWidth - 5));
+        }
+    }
+
+    if (container && btnLeft && btnRight) {
+        // Eventos de clique
+        btnLeft.onclick = () => container.scrollBy({ left: -350, behavior: 'smooth' });
+        btnRight.onclick = () => container.scrollBy({ left: 350, behavior: 'smooth' });
+
+        // Monitora o scroll para atualizar as setas
+        container.addEventListener('scroll', updateArrows);
+
+        // Executa uma vez no carregamento
+        window.addEventListener('load', updateArrows);
+        // Executa ao redimensionar a tela
+        window.addEventListener('resize', updateArrows);
+    }
 });
