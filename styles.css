@@ -5,11 +5,11 @@
     --primary: #00897bd0;
     --primary-light: #c8e5e4;
     --primary-medium: #a2ccc9;
-    --primary-dark: #004D40;
+    --primary-dark: #00816b;
     --surface-glass: rgba(255, 255, 255, 0.901);
     --surface: #FFFFFF;
     --bg-body: #F0F4F8;
-    --text-main: #006c61;
+    --text-main: #004c44;
     --text-muted: #607D8B;
     
     /* --- GEOMETRIA --- */
@@ -107,7 +107,7 @@ body {
     border-radius: 12px;
     font-weight: 800;
     font-size: 0.9rem;
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Inter', sans-serif;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
     /* Garante que o logo não encolha se o texto for grande */
@@ -123,10 +123,10 @@ body {
 }
 
 .user-context h2 { 
-    font-family: 'Outfit', sans-serif;
-    font-size: 1.1rem; 
+    font-family: 'Inter', sans-serif;
+    font-size: 1.2rem; 
     font-weight: 700;
-    color: var(--text-main); 
+    color: var(--primary-dark); 
     margin: 0; 
     line-height: 1.2;
     /* Truncar texto se for muito longo para 420px */
@@ -136,8 +136,8 @@ body {
 }
 
 .user-context span { 
-    font-family: 'Roboto', sans-serif;
-    font-size: 0.85rem; 
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem; 
     color: var(--text-muted); 
     font-weight: 500;
 }
@@ -239,14 +239,14 @@ body {
 }
 
 .day-card.is-today {
-    border-color: var(--primary);
+    border-color: var(--primary-dark);
     box-shadow: 0 0 0 4px rgba(0, 137, 123, 0.15);
 }
 
 .day-card__title {
     font-size: 1.5rem;
     font-weight: 700;
-    color: var(--primary);
+    color: #00766ad0;
     text-align: center;
     margin-bottom: 16px;
 }
@@ -261,7 +261,7 @@ body {
 .class-item__subject {
     font-size: 1rem;
     font-weight: 500;
-    color: var(--primary);
+    color: var(--primary-dark);
     text-align: center;
     display: block;
 }
@@ -289,7 +289,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    color: var(--primary-dark);
+    color: var(--text-main);
     font-size: 0.875rem;
     font-weight: 400;
     margin-bottom: 12px;
