@@ -11,7 +11,7 @@
     --bg-body: #F0F4F8;
     --text-main: #004c44;
     --text-muted: #607D8B;
-    
+
     /* --- GEOMETRIA --- */
     --radius-day: 24px;
     --radius-item: 24px;
@@ -19,7 +19,11 @@
     --spacing-p4: 16px;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
     font-family: 'Inter', sans-serif;
@@ -27,7 +31,7 @@ body {
     color: var(--text-main);
     line-height: 1.6;
     min-height: 100vh;
-    padding-bottom: 120px; 
+    padding-bottom: 120px;
     overflow-x: hidden;
 }
 
@@ -37,13 +41,13 @@ body {
 .hero-card {
     background: #FFFFFF;
     border-radius: 24px;
-    padding: 0; 
+    padding: 0;
     box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
     position: relative;
     overflow: hidden;
-    height: 180px; 
+    height: 80px;
     width: 100%;
-    max-width: 420px; 
+    max-width: 420px;
     margin: 0 auto;
 }
 
@@ -51,20 +55,20 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    display: block;   
+    display: block;
 }
 
 /* ==========================================================================
    HEADER (VISUAL CARD FLUTUANTE - LARGURA MOBILE EXACT MATCH)
    ========================================================================== */
 .context-header {
-    position: relative; 
+    position: relative;
     background: transparent;
     backdrop-filter: none;
     border: none;
-    
+
     /* Espaço para o card flutuar */
-    padding: 24px 20px 0 20px; 
+    padding: 24px 20px 0 20px;
     width: 100%;
     z-index: 50;
 }
@@ -74,19 +78,21 @@ body {
     background: #FFFFFF;
     border-radius: 24px;
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-    
+
     /* Tamanho EXATO da Home (420px) */
     width: 100%;
-    max-width: 420px; 
+    height: 60px;
+    max-width: 420px;
     margin: 0 auto;
     padding: 16px 24px;
-    
+
     /* Layout Interno */
     display: flex;
     align-items: center;
-    justify-content: center; /* <--- AQUI: Centraliza o conjunto Logo + Texto */
+    justify-content: center;
+    /* <--- AQUI: Centraliza o conjunto Logo + Texto */
     gap: 16px;
-    
+
     /* Animação */
     animation: slideDown 0.5s ease;
     transition: max-width 0.3s ease;
@@ -95,7 +101,7 @@ body {
 /* Desktop: Força a manter 420px para consistência total */
 @media (min-width: 1024px) {
     .header-content {
-        max-width: 420px; 
+        max-width: 420px;
     }
 }
 
@@ -111,7 +117,7 @@ body {
     letter-spacing: 0.5px;
     box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
     /* Garante que o logo não encolha se o texto for grande */
-    flex-shrink: 0; 
+    flex-shrink: 0;
 }
 
 /* Textos */
@@ -119,15 +125,15 @@ body {
     display: flex;
     flex-direction: column;
     /* Garante que o texto quebre linha se precisar */
-    min-width: 0; 
+    min-width: 0;
 }
 
-.user-context h2 { 
+.user-context h2 {
     font-family: 'Inter', sans-serif;
-    font-size: 1.2rem; 
+    font-size: 1.2rem;
     font-weight: 700;
-    color: var(--primary-dark); 
-    margin: 0; 
+    color: var(--primary-dark);
+    margin: 0;
     line-height: 1.2;
     /* Truncar texto se for muito longo para 420px */
     white-space: nowrap;
@@ -135,16 +141,23 @@ body {
     text-overflow: ellipsis;
 }
 
-.user-context span { 
+.user-context span {
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem; 
-    color: var(--text-muted); 
+    font-size: 0.95rem;
+    color: var(--text-muted);
     font-weight: 500;
 }
 
 @keyframes slideDown {
-    from { transform: translateY(-20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 
@@ -152,44 +165,42 @@ body {
    SISTEMA DE LAYOUT
    ========================================================================== */
 
-/* 1. MODO VERTICAL (Mobile/Tablet Padrão) */
+/* 1. MODO HORIZONTAL PADRÃO (Efeito Mobile em todos os tamanhos) */
 .schedule-view {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    /* Força linha única */
     width: 100%;
-    
-    /* Padding lateral OBRIGATÓRIO (20px) */
-    padding: 24px 20px 140px 20px; 
-    
-    /* Centraliza o bloco na tela */
-    align-items: center; 
-    
-    /* --- CORREÇÃO: RESPIRO ENTRE OS CARDS --- */
-    gap: 24px; /* Adiciona espaço entre Segunda, Terça, Quarta... */
-}
 
-/* Card Vertical: Trava em 600px (Cards podem ser um pouco mais largos que o header se quiser, ou pode mudar aqui também) */
-.schedule-view .day-card {
-    width: 100%;
-    max-width: 400px; 
-}
-
-
-/* 2. MODO HORIZONTAL */
-.schedule-view--horizontal {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: min(85vw, 400px);
-    gap: 16px;
-    
+    /* Habilita o Eixo X com Estouro Controlado */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
-    
-    padding-left: 20px;
-    padding-right: 20px;
-    
+    -webkit-overflow-scrolling: touch;
+
+    /* Padding e Alinhamento */
+    padding: 24px 20px 140px 20px;
     align-items: start;
-    flex-direction: unset;
+    gap: 16px;
+}
+
+/* 2. LIMITAR FLEXIBILIDADE (Evita que os cards estiquem) */
+.schedule-view .day-card {
+    flex: 0 0 auto;
+    /* Não cresce, não encolhe */
+    width: 85vw;
+    /* Tamanho mobile-first */
+    max-width: 400px;
+    /* Trava em telas grandes */
+    scroll-snap-align: center;
+}
+
+/* Esconder scrollbar para manter o visual Zen */
+.schedule-view::-webkit-scrollbar {
+    display: none;
+}
+
+.schedule-view {
+    scrollbar-width: none;
 }
 
 .schedule-view--horizontal .day-card {
@@ -199,26 +210,98 @@ body {
     height: 100%;
 }
 
+/* 2.1 ZONA DE ESTABILIDADE (Tablets e Janelas Médias) */
+/* Resolve o efeito "esticado" fixando a largura em um valor harmônico */
+@media (min-width: 500px) and (max-width: 1023px) {
+    .schedule-view .day-card {
+        width: 270px;      /* Tamanho fixo, próximo ao do Desktop */
+        max-width: 270px;  /* Força bruta para impedir o estiramento */
+    }
+}
+
 
 /* 3. MODO DESKTOP */
 @media (min-width: 1024px) {
+
     .schedule-view,
     .schedule-view--horizontal {
         display: grid;
-        grid-template-columns: repeat(5, minmax(250px, 400px));
+        /* Força os cards a criarem novas colunas lateralmente, nunca linhas */
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(270px, 300px);
         gap: 24px;
-        
-        width: fit-content;
+
+        width: 100%;
+        max-width: 100%;
+        /* Garante que o container não ultrapasse a tela */
         margin: 0 auto;
-        justify-content: center;
-        
+        justify-content: start;
+
+        overflow-x: auto;
+        /* Base para o scroll e para as setas funcionarem */
+        scroll-snap-type: x mandatory;
+
         padding: 40px;
         padding-bottom: 120px;
-        
+
         overflow-x: auto;
+
+        /* --- SCROLLBAR OCULTA (Navegação por Setas) --- */
+        scrollbar-width: none;
+        /* Firefox */
+
     }
 
-    .day-card, 
+    .hero-card {
+        background: #FFFFFF;
+        border-radius: 24px;
+        padding: 0;
+        box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
+        position: relative;
+        overflow: hidden;
+        height: 90px;
+        width: 100%;
+        max-width: 420px;
+        margin: 0 auto;
+    }
+
+    .header-content {
+        /* TRANSFORMAÇÃO EM CARD */
+        background: #FFFFFF;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
+
+        /* Tamanho EXATO da Home (420px) */
+        width: 100%;
+        height: 60px;
+        max-width: 420px;
+        margin: 0 auto;
+        padding: 16px 24px;
+
+        /* Layout Interno */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* <--- AQUI: Centraliza o conjunto Logo + Texto */
+        gap: 16px;
+
+        /* Animação */
+        animation: slideDown 0.5s ease;
+        transition: max-width 0.3s ease;
+    }
+
+    .day-card {
+        scroll-snap-align: start;
+        /* Faz o card 'grudar' no início ao scrollar */
+    }
+
+    /* Esconde no Chrome, Safari e Edge */
+    .schedule-view::-webkit-scrollbar,
+    .schedule-view--horizontal::-webkit-scrollbar {
+        display: none;
+    }
+
+    .day-card,
     .schedule-view .day-card {
         width: auto;
         max-width: none;
@@ -233,7 +316,7 @@ body {
     background: var(--primary-light);
     border-radius: var(--radius-day);
     padding: var(--spacing-p4);
-    box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: 0.3s;
     border: 2px solid transparent;
 }
@@ -299,7 +382,8 @@ body {
 .floating-dock {
     position: fixed;
     bottom: 24px;
-    left: 0; right: 0;
+    left: 0;
+    right: 0;
     margin: 0 auto;
     width: max-content;
     max-width: 90vw;
@@ -311,7 +395,7 @@ body {
     display: flex;
     align-items: center;
     gap: 16px;
-    box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     z-index: 9999;
 }
 
@@ -324,8 +408,15 @@ body {
     cursor: pointer;
     display: flex;
 }
-.dock-btn-icon:hover { color: var(--primary); background: var(--primary-light); }
-.dock-btn-icon span { font-size: 28px; }
+
+.dock-btn-icon:hover {
+    color: var(--primary);
+    background: var(--primary-light);
+}
+
+.dock-btn-icon span {
+    font-size: 28px;
+}
 
 .dock-btn-primary {
     background: var(--primary);
@@ -342,15 +433,24 @@ body {
 }
 
 @keyframes pulse-border {
-    0% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0.4); }
-    70% { box-shadow: 0 0 0 10px rgba(0, 137, 123, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(0, 137, 123, 0); }
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 137, 123, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 137, 123, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 137, 123, 0);
+    }
 }
 
 /* ==========================================================================
    ESTADOS DE INTERFACE (LOADING & ERROR)
    ========================================================================== */
-.loading-state, .error-state {
+.loading-state,
+.error-state {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -383,8 +483,122 @@ body {
     animation: spin 1s linear infinite;
 }
 
+/* --- SETAS DE NAVEGAÇÃO (Globais para Mouse) --- */
+.nav-arrow {
+    display: flex;
+    position: absolute;
+    /* 🧠 ALINHAMENTO UNIFICADO: 14% coloca a seta na linha do Título/Intervalo */
+    top: 11%; 
+    transform: translateY(-50%);
+    z-index: 100;
+
+    background: var(--surface);
+    color: var(--primary-dark);
+    border: 2px solid var(--primary-light);
+    width: 60px; /* Um pouco menor em telas pequenas para não cobrir muito */
+    height: 60px;
+    border-radius: 50%;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-arrow:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.nav-arrow.left { left: 8px; }
+.nav-arrow.right { right: 8px; }
+.nav-arrow span { font-size: 28px; }
+
+/* Classe para esconder */
+.nav-arrow.is-hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.8);
+}
+
+/* 🧠 NEURO-ADAPTAÇÃO: Esconde as setas APENAS se o dispositivo for de toque (Dedo) */
+@media (pointer: coarse) {
+    .nav-arrow { display: none !important; }
+}
+
+/* Ajuste específico para Desktop (Setas maiores e posição refinada) */
+@media (min-width: 1024px) {
+    .nav-arrow {
+        width: 60px;
+        height: 60px;
+        top: 14%; /* Seu ajuste personalizado de altura */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .nav-arrow span { font-size: 32px; }
+    .nav-arrow.left { left: 10px; }
+    .nav-arrow.right { right: 10px; }
+}
+
+@media (min-width: 1024px) {
+    .nav-arrow {
+        display: flex;
+        position: absolute;
+        top: 14%;
+        transform: translateY(-50%);
+        z-index: 100;
+
+        background: var(--surface);
+        color: var(--primary-dark);
+        /* Cor mais forte para contraste */
+        border: 2px solid var(--primary-light);
+        /* Borda sutil para destacar do fundo */
+        width: 60px;
+        /* Botão maior para facilitar o clique */
+        height: 60px;
+        border-radius: 50%;
+
+        /* Sombra mais forte (Profundidade Nível 3) */
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
+
+        cursor: pointer;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    /* Classe para esconder com suavidade */
+    .nav-arrow.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-50%) scale(0.8);
+    }
+
+    .nav-arrow:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateY(-50%) scale(1.1);
+    }
+
+    .nav-arrow.left {
+        left: 10px;
+    }
+
+    .nav-arrow.right {
+        right: 10px;
+    }
+
+    .nav-arrow span {
+        font-size: 32px;
+    }
+}
+
 @keyframes spin {
-    100% { transform: rotate(360deg); }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .empty-msg {
