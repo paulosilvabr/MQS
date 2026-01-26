@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MQS - Mano, qual é a sala?!</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700;800&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
     <link rel="stylesheet" href="home.css">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
-    
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📅</text></svg>">
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#00897b">
-    
+
     <link rel="apple-touch-icon" href="./assets/icon-192.png">
     <meta name="apple-mobile-web-app-title" content="MQS">
     <meta name="mobile-web-app-capable" content="yes">
@@ -27,27 +33,27 @@
 <body>
 
     <main class="zen-container">
-        
+
         <header class="hero-card">
             <img src="./assets/banner-mqs.png" alt="Banner MQS" class="hero-image">
         </header>
 
         <div id="warm-welcome" class="warm-card hidden">
-            
+
             <div class="warm-tip-box">
                 <span id="warm-tip-icon" class="tip-icon">💡</span>
                 <p id="warm-tip-text" class="tip-text">Carregando sua dose de sabedoria...</p>
             </div>
-            
+
             <div class="saved-context-box">
                 <span id="saved-course">Curso Salvo</span>
                 <span id="saved-details">Detalhes Salvos</span>
             </div>
-            
+
             <button id="btn-quick-access" class="cta-primary">
                 Ver Grade Agora
             </button>
-            
+
             <button id="btn-reset-app" class="btn-tonal">
                 <span class="material-symbols-rounded">home</span>
                 <span>Alterar curso ou período</span>
@@ -55,12 +61,13 @@
         </div>
 
         <form id="selection-form" class="flow-form">
-            
+
             <div class="form-group">
                 <label for="course-input" class="label-zen">Curso</label>
                 <div class="input-wrapper">
                     <span class="material-symbols-rounded icon">search</span>
-                    <input type="text" id="course-input" list="courses-list" placeholder="Ex: Sistemas para Internet" autocomplete="off">
+                    <input type="text" id="course-input" list="courses-list" placeholder="Ex: Sistemas para Internet"
+                        autocomplete="off">
                     <datalist id="courses-list">
                         <option value="Sistemas para Internet">
                         <option value="Agronomia">
@@ -71,9 +78,9 @@
 
             <div class="form-group">
                 <label class="label-zen">Turno</label>
-                <div class="segmented-control" id="shift-selector">
-                    <button type="button" class="segment-btn" data-value="matutino">Matutino</button>
-                    <button type="button" class="segment-btn" data-value="noturno">Noturno</button>
+                <div class="choice-chips-wrapper" id="shift-selector">
+                    <button type="button" class="choice-chip" data-value="matutino">Matutino</button>
+                    <button type="button" class="choice-chip" data-value="noturno">Noturno</button>
                 </div>
             </div>
 
@@ -90,7 +97,7 @@
                         <button type="button" class="chip-btn" data-value="7">7º</button>
                         <button type="button" class="chip-btn" data-value="8">8º</button>
                     </div>
-                    <div class="scroll-fade"></div> 
+                    <div class="scroll-fade"></div>
                 </div>
             </div>
 
@@ -111,4 +118,5 @@
 
     <script src="home.js"></script>
 </body>
+
 </html>

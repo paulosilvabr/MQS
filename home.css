@@ -211,33 +211,51 @@ body {
 
 
 
-.segmented-control {
+/* CONTAINER DOS CHIPS (Lado a Lado) */
+.choice-chips-wrapper {
     display: flex;
-    background: #ffffff;
-    border: none;
-    padding: 4px;
-    border-radius: var(--radius-pill);
-    height: 50px;
-    box-shadow: var(--shadow-hero);
+    gap: 12px; /* Espaço entre os botões */
+    width: 100%;
 }
-.segment-btn {
-    flex: 1;
-    border: none;
-    padding: 10px;
+
+/* ESTILO DO BOTÃO (Choice Chip) */
+.choice-chip {
+    flex: 1; /* Ocupam largura igual (50% cada) */
+    
+    /* Visual Base (Desativado) */
+    background: #FFFFFF;
+    border: 1px solid var(--border-light); /* Borda sutil para definir a área */
     border-radius: var(--radius-pill);
-    background: transparent;
+    padding: 14px;
+    
     color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
     font-size: 1rem;
     font-weight: 500;
+    
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+    
+    /* Sombra leve igual aos outros inputs */
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
 }
-.segment-btn.active {
-    background: var(--primary); /* Branco eleva o botão */
-    color: #ffffff; /* Texto verde */
+
+/* ESTILO ATIVO (Quando selecionado) */
+.choice-chip.active {
+    background: var(--primary); /* Verde */
+    color: white;
+    border-color: var(--primary);
     font-weight: 600;
-    /* Sombra suave para dar profundidade (Layer) */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+    /* Efeito de elevação sutil */
+    box-shadow: 0 4px 12px rgba(0, 137, 123, 0.25);
+    transform: translateY(-1px);
+}
+
+/* HOVER (Opcional para Desktop) */
+.choice-chip:hover:not(.active) {
+    background: #F5F7FA;
+    border-color: #d1d5db;
 }
 
 .horizontal-scroll-wrapper {

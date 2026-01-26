@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Elementos do Formulário
     const courseInput = document.getElementById('course-input');
-    const shiftBtns = document.querySelectorAll('.segment-btn');
+    const shiftBtns = document.querySelectorAll('.choice-chip');
     const periodBtns = document.querySelectorAll('.chip-btn');
     const submitBtn = document.getElementById('btn-ver-horarios');
     const feedbackMsg = document.getElementById('form-feedback');
