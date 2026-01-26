@@ -33,8 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // LÓGICA DE START
     // ============================================================
     const savedData = localStorage.getItem('mqs_user_data');
+    
+    // Verifica se há um pedido explícito de nova busca na URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const forceNewSearch = urlParams.get('action') === 'search';
 
-    if (savedData) {
+    // Só exibe o Warm Start se tiver dados salvos E NÃO for uma nova busca forçada
+    if (savedData && !forceNewSearch) {
         const data = JSON.parse(savedData);
         form.classList.add('hidden');
         warmDiv.classList.remove('hidden');
@@ -44,8 +49,15 @@ document.addEventListener('DOMContentLoaded', () => {
         savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
 
     } else {
+        // Se for nova busca (ou primeiro acesso), mostra o formulário
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
+        
+        // Se foi um clique no botão Home (forceNewSearch), limpamos a URL
+        // para que, se o usuário der F5, a página não fique presa no modo de busca
+        if (forceNewSearch) {
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
     }
 
     // ============================================================

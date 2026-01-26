@@ -178,9 +178,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // =========================================================
 
     // BOTÃO HOME
+    // BOTÃO HOME
     if (homeBtn) {
         homeBtn.addEventListener('click', () => {
-            window.location.href = 'index.html';
+            // Adiciona um parâmetro na URL para avisar a Home que queremos buscar algo novo
+            window.location.href = 'index.html?action=search';
         });
     }
 
