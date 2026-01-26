@@ -322,8 +322,8 @@ body {
 }
 
 .day-card.is-today {
-    border-color: var(--primary-dark);
-    box-shadow: 0 0 0 4px rgba(0, 137, 123, 0.15);
+    border-color: #00887a5b;
+    box-shadow: 0 0 0 4px rgba(0, 125, 113, 0.15);
 }
 
 .day-card__title {

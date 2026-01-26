@@ -132,8 +132,27 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
         }).join('');
 
-        // Atualiza as setas logo após renderizar
-        setTimeout(updateArrows, 100);
+        // AJUSTE CIRÚRGICO: AUTO-SCROLL PARA O DIA ATUAL
+        // Aguarda 100ms para o navegador desenhar os cards, depois rola até o dia certo
+        setTimeout(() => {
+            const todayCard = scheduleView.querySelector('.day-card.is-today');
+
+            // Só executa se achar o card de hoje E se estivermos em Mobile/Tablet (< 1024px)
+            // No Desktop geralmente queremos ver a grade inteira de uma vez
+            if (todayCard && window.innerWidth < 1024) {
+                // Calcula a posição: Posição do Card - Padding da tela (24px)
+                // Isso faz o card encostar na esquerda, mas com um respiro elegante
+                const scrollPosition = todayCard.offsetLeft - 24;
+
+                scheduleView.scrollTo({
+                    left: scrollPosition,
+                    behavior: 'smooth'
+                });
+            }
+
+            // Depois que acomodar o scroll, verifica as setas
+            updateArrows();
+        }, 100);
     }
 
     // =========================================================
