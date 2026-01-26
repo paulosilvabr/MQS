@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('btn-ver-horarios');
     const feedbackMsg = document.getElementById('form-feedback');
 
-    let userSelection = { course: '', shift: 'matutino', period: '2' };
+    let userSelection = { course: '', shift: null, period: null };
 
     const ALLOWED_COURSES = [
         "Sistemas para Internet",
@@ -69,8 +69,15 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
+        
+        // Limpa inputs e variáveis
         courseInput.value = ''; 
+        userSelection = { course: '', shift: null, period: null }; // Reseta estado
         feedbackMsg.classList.add('hidden');
+
+        // REMOVE A CLASSE ACTIVE VISUALMENTE DE TODOS OS BOTÕES
+        shiftBtns.forEach(btn => btn.classList.remove('active'));
+        periodBtns.forEach(btn => btn.classList.remove('active'));
     });
 
     shiftBtns.forEach(btn => {
@@ -93,6 +100,11 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.addEventListener('click', () => {
         const courseValue = courseInput.value.trim();
         if (!courseValue) { showError("Por favor, digite o nome do curso!"); return; }
+
+        if (!userSelection.shift || !userSelection.period) {
+            showError("Por favor, selecione o turno e o período.");
+            return;
+        }
 
         const isSistemas = ALLOWED_COURSES.includes(courseValue);
         if (!isSistemas) { showError(`O curso "${courseValue}" estará disponível em breve!`); return; }
