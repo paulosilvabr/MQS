@@ -121,15 +121,19 @@ body {
 
 /* BOTÃO TONAL (MATERIAL 3) */
 .btn-tonal {
-    background: #E0F2F1; /* Verde menta suave */
+    background: #E0F2F1;
     color: var(--primary-hover);
     border: none;
-    padding: 12px 24px;
+    
+    /* AJUSTE CIRÚRGICO: Altura e corpo igualados ao botão principal */
+    min-height: 56px; 
+    padding: 0 24px; /* Padding lateral apenas, altura define o resto */
+    
     border-radius: var(--radius-pill);
     width: 100%;
     
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 1rem; /* Aumentei levemente para equilibrar */
     font-weight: 600;
     
     display: flex;
