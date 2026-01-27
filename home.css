@@ -296,7 +296,7 @@ body {
     padding-bottom: 5px;
 
     /* Garante que nada vaze */
-    overflow: hidden;
+    overflow: visible;
 }
 
 .chips-container {
@@ -454,59 +454,69 @@ body {
 }
 
 .mini-arrow {
-    /* Padrão: Visível (Flex) para qualquer tela que tenha mouse */
+    /* Padrão: Visível (Flex) */
     display: flex;
     position: absolute;
+    
+    /* ALINHAMENTO VERTICAL PERFEITO */
+    /* Como removemos o padding excessivo do wrapper, o 50% agora bate com o centro dos botões */
     top: 50%;
     transform: translateY(-50%);
-    /* Centraliza verticalmente */
-    z-index: 10;
-
-    width: 40px;
-    height: 40px;
+    margin-top: -4px;
+    
+    /* SOBREPOSIÇÃO (CAMADA) */
+    z-index: 20; /* Aumentei para 20 para garantir que fique ACIMA dos botões */
+    
+    /* TAMANHO IGUAL AO BOTÃO DE PERÍODO */
+    width: 69px;
+    height: 69px;
     border-radius: 50%;
-
+    
     /* Estilo Visual */
     background: #FFFFFF;
     color: var(--primary-hover);
     border: 2px solid #c8e5e4;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-
+    
+    /* Sombra mais forte para destacar que está "flutuando" por cima */
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* REGRA DE OURO: Esconde APENAS em dispositivos de toque (Celular/Tablet) */
+/* Ícone maior para acompanhar o botão de 60px */
+.mini-arrow span {
+    font-size: 32px; 
+}
+
+/* POSICIONAMENTO LATERAL (Overlay) */
+/* Usamos valores negativos leves para ela morder a borda mas ficar em cima do carrossel */
+.mini-arrow.left {
+    left: -8px; 
+}
+
+.mini-arrow.right {
+    right: -8px;
+}
+
+/* Esconde APENAS em dispositivos de toque */
 @media (pointer: coarse) {
     .mini-arrow {
         display: none !important;
     }
 }
 
+/* Hover e Hidden mantidos... */
 .mini-arrow:hover {
     background: var(--primary);
     color: white;
     border-color: var(--primary);
     transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 14px rgba(0, 137, 123, 0.25);
+    box-shadow: 0 8px 20px rgba(0, 137, 123, 0.3);
 }
 
-.mini-arrow span {
-    font-size: 24px;
-}
-
-/* Posições */
-.mini-arrow.left {
-    left: -12px;
-}
-
-.mini-arrow.right {
-    right: -12px;
-}
-
-/* Estado Oculto (Controlado pelo JavaScript quando não há mais scroll) */
 .mini-arrow.hidden {
     opacity: 0;
     pointer-events: none;
