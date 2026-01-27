@@ -17,9 +17,9 @@
             {
               "day": "Terça",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Inglês Instrumental", "room": "LABDES", "prof": "Mirian Nichida" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Inglês Instrumental", "room": "LABMÍDIA", "prof": "Mirian Nichida" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Análise de Sistemas", "room": "LABDES", "prof": "Gerson Focking" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Análise de Sistemas", "room": "LABMÍDIA", "prof": "Gerson Focking" }
               ]
             },
             {
@@ -33,17 +33,17 @@
             {
               "day": "Quinta",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund. Prog. Científica", "room": "LABDES", "prof": "Vinicius Rios" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Fund. Prog. Científica", "room": "LABMÁTICA", "prof": "Vinicius Rios" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund. Prog. Científica", "room": "LABDES", "prof": "Vinicius Rios" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Fund. Prog. Científica", "room": "LABMÁTICA", "prof": "Vinicius Rios" }
               ]
             },
             {
               "day": "Sexta",
               "items": [
-                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Prog. Orientada a Objetos", "room": "LABDES", "prof": "Helder Pereira" },
+                { "type": "class", "timeStart": "07:30", "timeEnd": "09:00", "subject": "Prog. Orientada a Objetos", "room": "LABPO", "prof": "Helder Pereira" },
                 { "type": "interval", "timeStart": "09:00", "timeEnd": "09:15", "label": "INTERVALO" },
-                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Prog. Orientada a Objetos", "room": "LABDES", "prof": "Helder Pereira" }
+                { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Prog. Orientada a Objetos", "room": "LABPO", "prof": "Helder Pereira" }
               ]
             }
           ]
