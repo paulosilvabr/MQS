@@ -15,7 +15,7 @@
     --text-muted: #607D8B;
 
     /* --- GEOMETRIA --- */
-    --radius-day: 24px;
+    --radius-day: 32px;
     --radius-item: 24px;
     --radius-pill: 9999px;
     --spacing-p4: 16px;
@@ -329,7 +329,7 @@ body {
 .day-card {
     background: var(--primary-medium);
     border-radius: var(--radius-day);
-    padding: var(--spacing-p4);
+    padding: 10px 16px 4px 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: 0.3s;
     border: 2px solid transparent;
