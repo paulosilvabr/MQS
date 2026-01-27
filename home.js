@@ -1,31 +1,58 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // --- ELEMENTOS DO DOM ---
     const form = document.getElementById('selection-form');
     const warmDiv = document.getElementById('warm-welcome');
-    
+
     // Elementos do Warm Start
     const savedCourse = document.getElementById('saved-course');
     const savedDetails = document.getElementById('saved-details');
     const quickBtn = document.getElementById('btn-quick-access');
     const resetBtn = document.getElementById('btn-reset-app');
-    
+
     // NOVOS Elementos da Dica
     const tipTextElement = document.getElementById('warm-tip-text');
     // const tipIconElement = document.getElementById('warm-tip-icon'); // Ícone é fixo por enquanto
-    
+
     // Elementos do Formulário
     const courseInput = document.getElementById('course-input');
-    const shiftBtns = document.querySelectorAll('.segment-btn');
+    const shiftBtns = document.querySelectorAll('.choice-chip');
     const periodBtns = document.querySelectorAll('.chip-btn');
     const submitBtn = document.getElementById('btn-ver-horarios');
     const feedbackMsg = document.getElementById('form-feedback');
+
+    // --- NOVO: Variáveis e Função de Navegação (Movidos para o topo) ---
+    const scrollContainer = document.getElementById('period-selector');
+    const btnLeft = document.getElementById('btn-scroll-left');
+    const btnRight = document.getElementById('btn-scroll-right');
+
+    const updateMiniArrows = () => {
+        if (!scrollContainer || !btnLeft || !btnRight) return;
+        const scrollWidth = scrollContainer.scrollWidth;
+        const clientWidth = scrollContainer.offsetWidth;
+        const scrollLeft = scrollContainer.scrollLeft;
+
+        const isScrollable = scrollWidth > (clientWidth + 10);
+
+        if (!isScrollable) {
+            btnLeft.classList.add('hidden');
+            btnRight.classList.add('hidden');
+        } else {
+            // Esquerda
+            if (scrollLeft <= 5) btnLeft.classList.add('hidden');
+            else btnLeft.classList.remove('hidden');
+
+            // Direita
+            if (scrollLeft >= (scrollWidth - clientWidth - 5)) btnRight.classList.add('hidden');
+            else btnRight.classList.remove('hidden');
+        }
+    };
 
     let userSelection = { course: '', shift: null, period: null };
 
     const ALLOWED_COURSES = [
         "Sistemas para Internet",
-        "sistemas para internet", 
+        "sistemas para internet",
         "Sistemas Para Internet"
     ];
 
@@ -33,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // LÓGICA DE START
     // ============================================================
     const savedData = localStorage.getItem('mqs_user_data');
-    
+
     // Verifica se há um pedido explícito de nova busca na URL
     const urlParams = new URLSearchParams(window.location.search);
     const forceNewSearch = urlParams.get('action') === 'search';
@@ -43,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = JSON.parse(savedData);
         form.classList.add('hidden');
         warmDiv.classList.remove('hidden');
-        
+
         savedCourse.textContent = data.course;
         const shiftFormatted = data.shift.charAt(0).toUpperCase() + data.shift.slice(1);
         savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
@@ -52,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Se for nova busca (ou primeiro acesso), mostra o formulário
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
-        
+
         // Se foi um clique no botão Home (forceNewSearch), limpamos a URL
         // para que, se o usuário der F5, a página não fique presa no modo de busca
         if (forceNewSearch) {
@@ -69,15 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
-        
+
         // Limpa inputs e variáveis
-        courseInput.value = ''; 
+        courseInput.value = '';
         userSelection = { course: '', shift: null, period: null }; // Reseta estado
         feedbackMsg.classList.add('hidden');
 
         // REMOVE A CLASSE ACTIVE VISUALMENTE DE TODOS OS BOTÕES
         shiftBtns.forEach(btn => btn.classList.remove('active'));
         periodBtns.forEach(btn => btn.classList.remove('active'));
+        setTimeout(updateMiniArrows, 50);
     });
 
     shiftBtns.forEach(btn => {
@@ -159,5 +187,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.warn('Fallback de dica ativado:', err);
                 tipTextElement.textContent = "Mantenha o foco e beba água!";
             });
+    }
+
+    // ============================================================
+    // EVENT LISTENERS DE NAVEGAÇÃO
+    // ============================================================
+    if (scrollContainer && btnLeft && btnRight) {
+        // Apenas conecta os eventos, pois a função já foi criada lá no topo
+        btnLeft.addEventListener('click', () => scrollContainer.scrollBy({ left: -200, behavior: 'smooth' }));
+        btnRight.addEventListener('click', () => scrollContainer.scrollBy({ left: 200, behavior: 'smooth' }));
+
+        scrollContainer.addEventListener('scroll', updateMiniArrows);
+        window.addEventListener('resize', updateMiniArrows);
+
+        // Verificações iniciais
+        updateMiniArrows();
+        setTimeout(updateMiniArrows, 100);
+        setTimeout(updateMiniArrows, 500);
+        window.addEventListener('load', updateMiniArrows);
     }
 });

@@ -1,7 +1,9 @@
 # 📍 MQS - Mano, Qual é a Sala?!
 
 > **Disciplina:** Introdução à Programação Web (Projeto Integrador)
+
 > **Status:** 🚀 Finalizado (MVP)
+
 > **Deploy:** [https://diegoaquinosza.github.io/MQS/]
 
 ## 1. O Projeto

@@ -3,17 +3,19 @@
 :root {
     /* --- PALETA ZEN --- */
     --primary: #00897bd0;
+    --primary-hover: #00897B;
     --primary-light: #c8e5e4;
     --primary-medium: #a2ccc9;
     --primary-dark: #00816b;
     --surface-glass: rgba(255, 255, 255, 0.901);
     --surface: #FFFFFF;
-    --bg-body: #F0F4F8;
+    --bg-body: #DAE5E3;
     --text-main: #004c44;
+    --text-medium: #008b7e;
     --text-muted: #607D8B;
 
     /* --- GEOMETRIA --- */
-    --radius-day: 24px;
+    --radius-day: 32px;
     --radius-item: 24px;
     --radius-pill: 9999px;
     --spacing-p4: 16px;
@@ -31,7 +33,8 @@ body {
     color: var(--text-main);
     line-height: 1.6;
     min-height: 100vh;
-    padding-bottom: 120px;
+    padding-bottom: 40px;
+    /* Apenas um respiro normal */
     overflow-x: hidden;
 }
 
@@ -178,7 +181,7 @@ body {
     -webkit-overflow-scrolling: touch;
 
     /* Padding e Alinhamento */
-    padding: 24px 20px 140px 20px;
+    padding: 24px 20px 18px 20px;
     align-items: start;
     gap: 16px;
 }
@@ -244,7 +247,7 @@ body {
         scroll-snap-type: x mandatory;
 
         padding: 40px;
-        padding-bottom: 120px;
+        padding-bottom: 16px;
 
         overflow-x: auto;
 
@@ -325,25 +328,26 @@ body {
 
 /* --- COMPONENTES --- */
 .day-card {
-    background: var(--primary-light);
+    background: var(--primary-medium);
     border-radius: var(--radius-day);
-    padding: var(--spacing-p4);
+    padding: 10px 16px 4px 16px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     transition: 0.3s;
     border: 2px solid transparent;
 }
 
 .day-card.is-today {
-    border-color: #00887a5b;
-    box-shadow: 0 0 0 4px rgba(0, 125, 113, 0.15);
+    border-color: #FFFFFF;
+    box-shadow: 0 15px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
 .day-card__title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #00766ad0;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
-    margin-bottom: 16px;
+    margin-bottom: 10px;
 }
 
 .class-item {
@@ -364,7 +368,7 @@ body {
 .class-item__details {
     display: flex;
     justify-content: space-between;
-    margin-top: 8px;
+    margin-top: 10px;
     font-size: 0.875rem;
     color: var(--text-main);
 }
@@ -372,13 +376,13 @@ body {
 .class-item__prof {
     font-size: 0.875rem;
     text-align: center;
-    margin-top: 4px;
+    margin-top: 10px;
     display: block;
     color: var(--text-muted);
 }
 
 .interval-pill {
-    background: var(--primary-medium);
+    background: var(--primary-light);
     border-radius: var(--radius-pill);
     padding: 8px 16px;
     display: flex;
@@ -390,25 +394,32 @@ body {
     margin-bottom: 12px;
 }
 
-/* Dock Flutuante */
+/* Dock de Ações (Agora estático) */
 .floating-dock {
-    position: fixed;
-    bottom: 24px;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
+    /* Posição no fluxo normal */
+    position: relative;
+
+    /* Centraliza e dá espaço da grade */
+    margin: 12px auto 40px auto;
+
+    /* Mantém o visual de pílula elegante */
     width: max-content;
     max-width: 90vw;
     background: rgba(255, 255, 255, 0.95);
+
+    /* Mantém o estilo glassmorphism */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
+
     padding: 8px 8px 8px 24px;
     border-radius: 9999px;
     display: flex;
     align-items: center;
     gap: 16px;
+
+    /* Sombra suave */
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    z-index: 9999;
+    z-index: 99;
 }
 
 .dock-btn-icon {
@@ -558,7 +569,7 @@ body {
         width: 60px;
         height: 60px;
         top: 14%;
-        /* Seu ajuste personalizado de altura */
+        /* Sombra mais forte (Profundidade Nível 3) */
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
@@ -572,41 +583,6 @@ body {
 
     .nav-arrow.right {
         right: 10px;
-    }
-}
-
-@media (min-width: 1024px) {
-    .nav-arrow {
-        display: flex;
-        position: absolute;
-        top: 14%;
-        transform: translateY(-50%);
-        z-index: 100;
-
-        background: var(--surface);
-        color: var(--primary-dark);
-        /* Cor mais forte para contraste */
-        border: 2px solid var(--primary-light);
-        /* Borda sutil para destacar do fundo */
-        width: 60px;
-        /* Botão maior para facilitar o clique */
-        height: 60px;
-        border-radius: 50%;
-
-        /* Sombra mais forte (Profundidade Nível 3) */
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
-
-        cursor: pointer;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* Classe para esconder com suavidade */
-    .nav-arrow.is-hidden {
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(-50%) scale(0.8);
     }
 
     .nav-arrow:hover {
@@ -615,16 +591,11 @@ body {
         transform: translateY(-50%) scale(1.1);
     }
 
-    .nav-arrow.left {
-        left: 10px;
-    }
-
-    .nav-arrow.right {
-        right: 10px;
-    }
-
-    .nav-arrow span {
-        font-size: 32px;
+    /* Classe para esconder com suavidade */
+    .nav-arrow.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+        transform: translateY(-50%) scale(0.8);
     }
 }
 
