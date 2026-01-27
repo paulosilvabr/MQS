@@ -1,19 +1,19 @@
 document.addEventListener('DOMContentLoaded', () => {
-    
+
     // --- ELEMENTOS DO DOM ---
     const form = document.getElementById('selection-form');
     const warmDiv = document.getElementById('warm-welcome');
-    
+
     // Elementos do Warm Start
     const savedCourse = document.getElementById('saved-course');
     const savedDetails = document.getElementById('saved-details');
     const quickBtn = document.getElementById('btn-quick-access');
     const resetBtn = document.getElementById('btn-reset-app');
-    
+
     // NOVOS Elementos da Dica
     const tipTextElement = document.getElementById('warm-tip-text');
     // const tipIconElement = document.getElementById('warm-tip-icon'); // Ícone é fixo por enquanto
-    
+
     // Elementos do Formulário
     const courseInput = document.getElementById('course-input');
     const shiftBtns = document.querySelectorAll('.choice-chip');
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const ALLOWED_COURSES = [
         "Sistemas para Internet",
-        "sistemas para internet", 
+        "sistemas para internet",
         "Sistemas Para Internet"
     ];
 
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // LÓGICA DE START
     // ============================================================
     const savedData = localStorage.getItem('mqs_user_data');
-    
+
     // Verifica se há um pedido explícito de nova busca na URL
     const urlParams = new URLSearchParams(window.location.search);
     const forceNewSearch = urlParams.get('action') === 'search';
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = JSON.parse(savedData);
         form.classList.add('hidden');
         warmDiv.classList.remove('hidden');
-        
+
         savedCourse.textContent = data.course;
         const shiftFormatted = data.shift.charAt(0).toUpperCase() + data.shift.slice(1);
         savedDetails.textContent = `${data.period}º Período • ${shiftFormatted}`;
@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Se for nova busca (ou primeiro acesso), mostra o formulário
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
-        
+
         // Se foi um clique no botão Home (forceNewSearch), limpamos a URL
         // para que, se o usuário der F5, a página não fique presa no modo de busca
         if (forceNewSearch) {
@@ -69,9 +69,9 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
-        
+
         // Limpa inputs e variáveis
-        courseInput.value = ''; 
+        courseInput.value = '';
         userSelection = { course: '', shift: null, period: null }; // Reseta estado
         feedbackMsg.classList.add('hidden');
 
@@ -160,4 +160,63 @@ document.addEventListener('DOMContentLoaded', () => {
                 tipTextElement.textContent = "Mantenha o foco e beba água!";
             });
     }
+
+    // ============================================================
+    // NAVEGAÇÃO HORIZONTAL (Lógica do app.js portada para Home)
+    // ============================================================
+    const scrollContainer = document.getElementById('period-selector');
+    const btnLeft = document.getElementById('btn-scroll-left');
+    const btnRight = document.getElementById('btn-scroll-right');
+
+    if (scrollContainer && btnLeft && btnRight) {
+
+        const updateMiniArrows = () => {
+            const scrollWidth = scrollContainer.scrollWidth;
+            const clientWidth = scrollContainer.offsetWidth; // Área visível
+            const scrollLeft = scrollContainer.scrollLeft;
+
+            // Lógica do app.js: Verifica se o conteúdo é maior que a área visível (+ margem de segurança)
+            const isScrollable = scrollWidth > (clientWidth + 10);
+
+            if (!isScrollable) {
+                // Se cabe tudo na tela, esconde as duas setas
+                btnLeft.classList.add('hidden');
+                btnRight.classList.add('hidden');
+            } else {
+                // Se tem rolagem, controla qual aparece
+
+                // Esquerda: Some se estiver no início (margem 5px)
+                if (scrollLeft <= 5) {
+                    btnLeft.classList.add('hidden');
+                } else {
+                    btnLeft.classList.remove('hidden');
+                }
+
+                // Direita: Some se estiver no fim (Cálculo matemático preciso)
+                if (scrollLeft >= (scrollWidth - clientWidth - 5)) {
+                    btnRight.classList.add('hidden');
+                } else {
+                    btnRight.classList.remove('hidden');
+                }
+            }
+        };
+
+        // Eventos de Clique (Scroll suave)
+        btnLeft.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: -200, behavior: 'smooth' });
+        });
+
+        btnRight.addEventListener('click', () => {
+            scrollContainer.scrollBy({ left: 200, behavior: 'smooth' });
+        });
+
+        // Listeners essenciais (Scroll e Resize)
+        scrollContainer.addEventListener('scroll', updateMiniArrows);
+        window.addEventListener('resize', updateMiniArrows);
+
+        // Inicialização
+        // Pequeno delay para garantir que o CSS renderizou os tamanhos
+        setTimeout(updateMiniArrows, 50);
+    }
+
 });

@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --primary: #00897bd0;          
+    --primary: #00897bd0;
     --primary-hover: #00897B;
     --bg-body: hsl(210, 36%, 95%);
     --surface: #FFFFFF;
@@ -14,10 +14,14 @@
     --shadow-hero: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
 body {
-   font-family: 'Inter', sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: var(--bg-body);
     background-image: none;
     color: var(--text-main);
@@ -36,7 +40,9 @@ body {
     margin-top: 40px;
 }
 
-.hidden { display: none !important; }
+.hidden {
+    display: none !important;
+}
 
 /* --- HERO CARD --- */
 .hero-card {
@@ -53,8 +59,9 @@ body {
 .hero-image {
     width: 100%;
     height: 100%;
-    object-fit: cover; 
-    display: block; /* Remove espaços brancos extras */
+    object-fit: cover;
+    display: block;
+    /* Remove espaços brancos extras */
 }
 
 .brand-title {
@@ -100,10 +107,12 @@ body {
 /* DICA SUAVIZADA (AJUSTE SOLICITADO) */
 .tip-text {
     font-size: 1.05rem;
-    font-weight: 500;   /* Mais leve (Medium) */
+    font-weight: 500;
+    /* Mais leve (Medium) */
     color: #7c7c81;
     line-height: 1.5;
-    font-style: normal; /* Sem itálico */
+    font-style: normal;
+    /* Sem itálico */
     opacity: 0.9;
 }
 
@@ -116,34 +125,43 @@ body {
     gap: 4px;
 }
 
-#saved-course { font-weight: 700; color: var(--primary-hover); }
-#saved-details { font-size: 0.9rem; color: var(--text-medium); }
+#saved-course {
+    font-weight: 700;
+    color: var(--primary-hover);
+}
+
+#saved-details {
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
 
 /* BOTÃO TONAL (MATERIAL 3) */
 .btn-tonal {
     background: #E0F2F1;
     color: var(--primary-hover);
     border: none;
-    
+
     /* MANTÉM: Altura igualada ao botão principal */
-    min-height: 56px; 
-    padding: 0 32px; /* Aumentei um pouco o padding lateral para ficar mais bonito solto */
-    
+    min-height: 56px;
+    padding: 0 32px;
+    /* Aumentei um pouco o padding lateral para ficar mais bonito solto */
+
     border-radius: var(--radius-pill);
-    
+
     /* ALTERAÇÃO AQUI: De 100% para fit-content e centraliza */
-    width: fit-content; 
-    margin: 4px auto 0 auto; /* O 'auto' nas laterais faz ele centralizar */
-    
+    width: fit-content;
+    margin: 4px auto 0 auto;
+    /* O 'auto' nas laterais faz ele centralizar */
+
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     font-weight: 600;
-    
+
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    
+
     cursor: pointer;
     transition: all 0.2s ease;
 }
@@ -180,6 +198,7 @@ body {
     display: flex;
     align-items: center;
 }
+
 .input-wrapper .icon {
     position: absolute;
     left: 16px;
@@ -187,6 +206,7 @@ body {
     font-size: 24px;
     pointer-events: none;
 }
+
 .input-wrapper input {
     width: 100%;
     height: 50px;
@@ -198,14 +218,15 @@ body {
     color: var(--text-main);
     background: #ffffff;
     transition: all 0.2s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
+
 .input-wrapper input:focus {
     outline: none;
     border-color: var(--primary);
     border-width: 2px;
     padding: 15px 15px 15px 51px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     background: #FFFFFF;
 }
 
@@ -214,39 +235,43 @@ body {
 /* CONTAINER DOS CHIPS (Lado a Lado) */
 .choice-chips-wrapper {
     display: flex;
-    gap: 12px; /* Espaço entre os botões */
+    gap: 12px;
+    /* Espaço entre os botões */
     width: 100%;
 }
 
 /* ESTILO DO BOTÃO (Choice Chip) */
 .choice-chip {
-    flex: 1; /* Ocupam largura igual (50% cada) */
-    
+    flex: 1;
+    /* Ocupam largura igual (50% cada) */
+
     /* Visual Base (Desativado) */
     background: #FFFFFF;
-    border: 1px solid var(--border-light); /* Borda sutil para definir a área */
+    border: 1px solid var(--border-light);
+    /* Borda sutil para definir a área */
     border-radius: var(--radius-pill);
     padding: 14px;
-    
+
     color: var(--text-muted);
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     font-weight: 500;
-    
+
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-    
+
     /* Sombra leve igual aos outros inputs */
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
 /* ESTILO ATIVO (Quando selecionado) */
 .choice-chip.active {
-    background: var(--primary); /* Verde */
+    background: var(--primary);
+    /* Verde */
     color: white;
     border-color: var(--primary);
     font-weight: 600;
-    
+
     /* Efeito de elevação sutil */
     box-shadow: 0 4px 12px rgba(0, 137, 123, 0.25);
     transform: translateY(-1px);
@@ -263,59 +288,63 @@ body {
     /* Expande lateralmente para o scroll ficar elegante */
     margin: 0 -12px;
     width: calc(100% + 24px);
-    
+
     /* RESPIRO VERTICAL: 
        Isso resolve o "amassado". Dá espaço para o botão crescer 
        sem encostar no label "Período" ou ser cortado embaixo. */
     padding-top: 8px;
-    padding-bottom: 5px; 
-    
+    padding-bottom: 5px;
+
     /* Garante que nada vaze */
-    overflow: hidden; 
+    overflow: hidden;
 }
 
 .chips-container {
     display: flex;
     gap: 12px;
-    
+
     /* Habilita o scroll */
     overflow-x: auto;
-    
+
     /* RESPIRO LATERAL IMPORTANTE:
        padding-left: Garante que o 1º botão não seja cortado ao crescer.
        padding-bottom: Espaço extra para a sombra não ser cortada. */
     padding: 5px 20px 16px 20px;
-    
+
     /* Esconde barra de rolagem */
     scrollbar-width: none;
     -ms-overflow-style: none;
-    
+
     /* Centraliza os botões na linha */
-    align-items: center; 
+    align-items: center;
 }
-.chips-container::-webkit-scrollbar { display: none; }
+
+.chips-container::-webkit-scrollbar {
+    display: none;
+}
 
 .chip-btn {
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    
+
     /* ESTILO MATERIAL 3 (TONAL) */
-    background: #ffffff; /* Cinza suave (Surface Variant) */
+    background: #ffffff;
+    /* Cinza suave (Surface Variant) */
     border: 1px solid var(--border-light);
     color: var(--text-muted);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
-    
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+
     font-weight: 600;
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
-    
+
     flex-shrink: 0;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    
+
     /* Transição suave para o efeito de crescimento */
     transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
@@ -327,10 +356,10 @@ body {
 .chip-btn.active {
     background: var(--primary);
     color: white;
-    
+
     /* Scale: O botão cresce para destacar */
     transform: scale(1.15);
-    
+
     /* Sombra colorida suave (Glow) */
     box-shadow: 0 4px 12px rgba(0, 137, 123, 0.25);
     border-color: var(--primary);
@@ -338,8 +367,10 @@ body {
 
 .scroll-fade {
     position: absolute;
-    right: 0; top: 0;
-    height: 100%; width: 40px;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 40px;
     background: linear-gradient(to right, transparent, var(--bg-body));
     pointer-events: none;
 }
@@ -372,18 +403,112 @@ body {
     transition: background 0.2s, transform 0.1s;
     font-family: 'Inter', sans-serif;
     box-shadow: 0 4px 12px rgba(26, 83, 69, 0.25);
-    
+
 }
-.cta-primary:hover { background: var(--primary-hover); }
-.cta-primary:active { transform: scale(0.98); }
+
+.cta-primary:hover {
+    background: var(--primary-hover);
+}
+
+.cta-primary:active {
+    transform: scale(0.98);
+}
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
+
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
+    }
 }
-.shake-anim { animation: shake 0.3s ease-in-out; }
+
+.shake-anim {
+    animation: shake 0.3s ease-in-out;
+}
+
+/* --- MINI SETAS DE NAVEGAÇÃO --- */
+
+/* Necessário para posicionar as setas de forma absoluta em relação ao container */
+.horizontal-scroll-wrapper {
+    position: relative;
+}
+
+.mini-arrow {
+    /* Padrão: Visível (Flex) para qualquer tela que tenha mouse */
+    display: flex;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    /* Centraliza verticalmente */
+    z-index: 10;
+
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+
+    /* Estilo Visual */
+    background: #FFFFFF;
+    color: var(--primary-hover);
+    border: 2px solid #c8e5e4;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* REGRA DE OURO: Esconde APENAS em dispositivos de toque (Celular/Tablet) */
+@media (pointer: coarse) {
+    .mini-arrow {
+        display: none !important;
+    }
+}
+
+.mini-arrow:hover {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+    transform: translateY(-50%) scale(1.1);
+    box-shadow: 0 6px 14px rgba(0, 137, 123, 0.25);
+}
+
+.mini-arrow span {
+    font-size: 24px;
+}
+
+/* Posições */
+.mini-arrow.left {
+    left: -12px;
+}
+
+.mini-arrow.right {
+    right: -12px;
+}
+
+/* Estado Oculto (Controlado pelo JavaScript quando não há mais scroll) */
+.mini-arrow.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50%) scale(0.8);
+}
