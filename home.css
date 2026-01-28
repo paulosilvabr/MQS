@@ -295,7 +295,7 @@ body {
     /* RESPIRO VERTICAL: 
        Isso resolve o "amassado". Dá espaço para o botão crescer 
        sem encostar no label "Período" ou ser cortado embaixo. */
-    padding-top: 8px;
+    padding-top: 0;
     padding-bottom: 5px;
 
     /* Garante que nada vaze */
