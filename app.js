@@ -140,84 +140,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Só executa se achar o card de hoje E se estivermos em Mobile/Tablet (< 1024px)
             // No Desktop geralmente queremos ver a grade inteira de uma vez
-            if (todayCard && window.innerWidth < 1024) {
+            if (todayCard && window.innerWidth < 1920) {
                 // Calcula a posição: Posição do Card - Padding da tela (24px)
                 // Isso faz o card encostar na esquerda, mas com um respiro elegante
-                const scrollPosition = todayCard.offsetLeft - 24;
-
-                scheduleView.scrollTo({
-                    left: scrollPosition,
-                    behavior: 'smooth'
-                });
-            }
-
-            // Depois que acomodar o scroll, verifica as setas
-            updateArrows();
-        }, 100);
+                todayCard.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center'
+            });
     }
 
-    // =========================================================
-    // 5. SISTEMA DE SETAS (Corrigido o erro de referência)
-    // =========================================================
-    function updateArrows() {
-        // Usa as variáveis definidas lá no topo
-        if (!scheduleView || !btnLeft || !btnRight) return;
-
-        const scrollWidth = scheduleView.scrollWidth;
-        const clientWidth = scheduleView.offsetWidth;
-        const scrollLeft = scheduleView.scrollLeft;
-
-        // Verifica se há conteúdo suficiente para rolar
-        const isScrollable = scrollWidth > (clientWidth + 20);
-
-        if (!isScrollable) {
-            btnLeft.classList.add('is-hidden');
-            btnRight.classList.add('is-hidden');
-        } else {
-            btnLeft.classList.toggle('is-hidden', scrollLeft <= 5);
-            btnRight.classList.toggle('is-hidden', scrollLeft >= (scrollWidth - clientWidth - 5));
-        }
+    // Depois que acomodar o scroll, verifica as setas
+    updateArrows();
+}, 100);
     }
 
-    // Listeners das Setas
-    if (scheduleView && btnLeft && btnRight) {
-        const getScrollStep = () => {
-            const card = scheduleView.querySelector('.day-card');
-            return card ? card.offsetWidth + 24 : 300;
-        };
+// =========================================================
+// 5. SISTEMA DE SETAS (Corrigido o erro de referência)
+// =========================================================
+function updateArrows() {
+    // Usa as variáveis definidas lá no topo
+    if (!scheduleView || !btnLeft || !btnRight) return;
 
-        btnLeft.onclick = () => scheduleView.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
-        btnRight.onclick = () => scheduleView.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
+    const scrollWidth = scheduleView.scrollWidth;
+    const clientWidth = scheduleView.offsetWidth;
+    const scrollLeft = scheduleView.scrollLeft;
 
-        scheduleView.addEventListener('scroll', updateArrows);
-        window.addEventListener('resize', updateArrows);
+    // Verifica se há conteúdo suficiente para rolar
+    const isScrollable = scrollWidth > (clientWidth + 20);
+
+    if (!isScrollable) {
+        btnLeft.classList.add('is-hidden');
+        btnRight.classList.add('is-hidden');
+    } else {
+        btnLeft.classList.toggle('is-hidden', scrollLeft <= 5);
+        btnRight.classList.toggle('is-hidden', scrollLeft >= (scrollWidth - clientWidth - 5));
     }
+}
 
-    // =========================================================
-    // 6. BOTÕES DE AÇÃO (Compartilhar e Home)
-    // =========================================================
+// Listeners das Setas
+if (scheduleView && btnLeft && btnRight) {
+    const getScrollStep = () => {
+        const card = scheduleView.querySelector('.day-card');
+        return card ? card.offsetWidth + 24 : 300;
+    };
 
-    // BOTÃO HOME
-    // BOTÃO HOME
-    if (homeBtn) {
-        homeBtn.addEventListener('click', () => {
-            // Adiciona um parâmetro na URL para avisar a Home que queremos buscar algo novo
-            window.location.href = 'index.html?action=search';
-        });
-    }
+    btnLeft.onclick = () => scheduleView.scrollBy({ left: -getScrollStep(), behavior: 'smooth' });
+    btnRight.onclick = () => scheduleView.scrollBy({ left: getScrollStep(), behavior: 'smooth' });
 
-    // BOTÃO COMPARTILHAR
-    if (shareBtn) {
-        shareBtn.addEventListener('click', async () => {
-            const originalContent = shareBtn.innerHTML;
-            shareBtn.innerHTML = '<span class="material-symbols-rounded spin">sync</span><span>Gerando...</span>';
-            shareBtn.style.pointerEvents = 'none';
+    scheduleView.addEventListener('scroll', updateArrows);
+    window.addEventListener('resize', updateArrows);
+}
 
-            try {
-                // 1. CRIAR O PALCO INVISÍVEL (Largura Dinâmica Ajustada)
-                const stage = document.createElement('div');
-                stage.id = "temp-print-stage";
-                stage.style.cssText = `
+// =========================================================
+// 6. BOTÕES DE AÇÃO (Compartilhar e Home)
+// =========================================================
+
+// BOTÃO HOME
+// BOTÃO HOME
+if (homeBtn) {
+    homeBtn.addEventListener('click', () => {
+        // Adiciona um parâmetro na URL para avisar a Home que queremos buscar algo novo
+        window.location.href = 'index.html?action=search';
+    });
+}
+
+// BOTÃO COMPARTILHAR
+if (shareBtn) {
+    shareBtn.addEventListener('click', async () => {
+        const originalContent = shareBtn.innerHTML;
+        shareBtn.innerHTML = '<span class="material-symbols-rounded spin">sync</span><span>Gerando...</span>';
+        shareBtn.style.pointerEvents = 'none';
+
+        try {
+            // 1. CRIAR O PALCO INVISÍVEL (Largura Dinâmica Ajustada)
+            const stage = document.createElement('div');
+            stage.id = "temp-print-stage";
+            stage.style.cssText = `
                 position: fixed; top: 0; left: 0;
                 width: fit-content; /* AJUSTE CIRÚRGICO: Abraça o conteúdo exato */
                 min-width: 1024px; /* Segurança para o cabeçalho não quebrar se a grade for muito pequena */
@@ -231,11 +227,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 font-family: 'Inter', sans-serif;
             `;
 
-                // 2. CABEÇALHO SINTÉTICO (Com fontes ajustadas)
-                const simpleHeader = document.createElement('div');
-                simpleHeader.style.cssText = "text-align: center; margin-bottom: 40px; width: 100%;";
+            // 2. CABEÇALHO SINTÉTICO (Com fontes ajustadas)
+            const simpleHeader = document.createElement('div');
+            simpleHeader.style.cssText = "text-align: center; margin-bottom: 40px; width: 100%;";
 
-                simpleHeader.innerHTML = `
+            simpleHeader.innerHTML = `
                     <div style="background: #00897bd0; color: white; display: inline-block; padding: 8px 16px; border-radius: 12px; font-weight: 800; font-size: 1.1rem; margin-bottom: 16px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
                         MQS
                     </div>
@@ -247,9 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     </h3>
                 `;
 
-                // 3. CLONE DA GRADE
-                const scheduleClone = scheduleView.cloneNode(true);
-                scheduleClone.style.cssText = `
+            // 3. CLONE DA GRADE
+            const scheduleClone = scheduleView.cloneNode(true);
+            scheduleClone.style.cssText = `
                     display: flex !important;
                     flex-direction: row !important;
                     justify-content: center !important;
@@ -259,19 +255,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     overflow: visible !important;
                 `;
 
-                const cards = scheduleClone.querySelectorAll('.day-card');
-                cards.forEach(card => {
-                    card.style.cssText = `
+            const cards = scheduleClone.querySelectorAll('.day-card');
+            cards.forEach(card => {
+                card.style.cssText = `
                         flex: 0 0 auto !important;
                         width: 300px !important;
                         min-width: 300px !important;
                         margin: 0 !important;
                     `;
-                });
+            });
 
-                // --- NOVO: 3.1. RODAPÉ SINTÉTICO ---
-                const simpleFooter = document.createElement('div');
-                simpleFooter.style.cssText = `
+            // --- NOVO: 3.1. RODAPÉ SINTÉTICO ---
+            const simpleFooter = document.createElement('div');
+            simpleFooter.style.cssText = `
                     text-align: center;
                     margin-top: 50px; /* Espaço para separar da grade */
                     width: 100%;
@@ -282,9 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
                     opacity: 0.9;
                 `;
 
-                // RODAPÉ SINTÉTICO
-                simpleFooter.innerHTML = `
-                    <p style="margin: 0; font-weight: 700; letter-spacing: 0.5px;">MQS • Mano Qual é a Sala?!</p>
+            // RODAPÉ SINTÉTICO
+            simpleFooter.innerHTML = `
+                    <p style="margin: 0; font-weight: 700; letter-spacing: 0.5px;">MQS • "Mano, Qual é a Sala?!"</p>
                     <p style="margin: 6px 0 0 0; color: #555;">
                         Criado por <strong>Diego Aquino</strong> <span style="color: #FFC107;">⚡</span>
                     </p>
@@ -293,55 +289,55 @@ document.addEventListener('DOMContentLoaded', () => {
                     </p>
                 `;
 
-                // 4. MONTAGEM DO PALCO
-                stage.appendChild(simpleHeader);
-                stage.appendChild(scheduleClone);
-                stage.appendChild(simpleFooter); // <-- Adiciona o rodapé no final
-                document.body.appendChild(stage);
+            // 4. MONTAGEM DO PALCO
+            stage.appendChild(simpleHeader);
+            stage.appendChild(scheduleClone);
+            stage.appendChild(simpleFooter); // <-- Adiciona o rodapé no final
+            document.body.appendChild(stage);
 
-                // 5. CAPTURA
-                const options = {
-                    scale: 2, // Mantém alta resolução (Retina)
-                    backgroundColor: "#F0F4F8",
-                    logging: false,
-                    // width e windowWidth REMOVIDOS para detectar o tamanho "fit-content" automaticamente
-                    ignoreElements: (el) => el.classList.contains('nav-arrow')
-                };
+            // 5. CAPTURA
+            const options = {
+                scale: 2, // Mantém alta resolução (Retina)
+                backgroundColor: "#F0F4F8",
+                logging: false,
+                // width e windowWidth REMOVIDOS para detectar o tamanho "fit-content" automaticamente
+                ignoreElements: (el) => el.classList.contains('nav-arrow')
+            };
 
-                await new Promise(r => setTimeout(r, 100));
+            await new Promise(r => setTimeout(r, 100));
 
-                const canvas = await html2canvas(stage, options);
-                document.body.removeChild(stage);
+            const canvas = await html2canvas(stage, options);
+            document.body.removeChild(stage);
 
-                // 6. COMPARTILHAR / BAIXAR
-                canvas.toBlob(blob => {
-                    const file = new File([blob], "grade_mqs.png", { type: "image/png" });
+            // 6. COMPARTILHAR / BAIXAR
+            canvas.toBlob(blob => {
+                const file = new File([blob], "grade_mqs.png", { type: "image/png" });
 
-                    if (navigator.share) {
-                        // Monta o texto: Curso + Quebra de Linha + Detalhes (Período/Turno)
-                        const shareText = `${displayCourse.textContent}\n${displayPeriod.textContent}`;
+                if (navigator.share) {
+                    // Monta o texto: Curso + Quebra de Linha + Detalhes (Período/Turno)
+                    const shareText = `${displayCourse.textContent}\n${displayPeriod.textContent}`;
 
-                        navigator.share({
-                            files: [file],
-                            title: 'Grade Horária', // Título para e-mail/sistema
-                            text: shareText         // Legenda que vai no WhatsApp/Telegram
-                        }).catch(e => console.log("Compartilhamento cancelado", e));
+                    navigator.share({
+                        files: [file],
+                        title: 'Grade Horária', // Título para e-mail/sistema
+                        text: shareText         // Legenda que vai no WhatsApp/Telegram
+                    }).catch(e => console.log("Compartilhamento cancelado", e));
 
-                    } else {
-                        const link = document.createElement('a');
-                        link.download = 'grade_mqs.png';
-                        link.href = URL.createObjectURL(blob);
-                        link.click();
-                    }
-                }, 'image/png');
+                } else {
+                    const link = document.createElement('a');
+                    link.download = 'grade_mqs.png';
+                    link.href = URL.createObjectURL(blob);
+                    link.click();
+                }
+            }, 'image/png');
 
-            } catch (error) {
-                console.error(error);
-                alert("Erro ao gerar imagem.");
-            } finally {
-                shareBtn.innerHTML = originalContent;
-                shareBtn.style.pointerEvents = 'auto';
-            }
-        });
-    }
+        } catch (error) {
+            console.error(error);
+            alert("Erro ao gerar imagem.");
+        } finally {
+            shareBtn.innerHTML = originalContent;
+            shareBtn.style.pointerEvents = 'auto';
+        }
+    });
+}
 });
