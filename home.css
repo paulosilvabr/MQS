@@ -32,9 +32,20 @@ body {
     background-color: var(--bg-body);
     background-image: none;
     color: var(--text-main);
-    display: block;
-    min-height: 100vh;
-    padding: 20px;
+    
+    /* Volta para Flex para centralizar, MAS com height corrigido */
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    
+    /* Altura exata da viewport */
+    min-height: 100dvh; 
+    
+    /* ZERO padding vertical, apenas lateral */
+    padding: 0 20px; 
+    
+    /* Garante que nada vaze */
+    overflow-y: auto; 
 }
 
 
@@ -45,7 +56,13 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    margin: 4px auto 0 auto;
+    
+    /* Adiciona o respiro vertical aqui dentro */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    /* Garante centralização */
+    margin: 0 auto; 
 }
 
 .hidden {
