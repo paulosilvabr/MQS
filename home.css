@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* --- ESTABILIDADE MOBILE --- */
+html {
+    height: 100%;
+    /* Previne que a página inteira balance quando o teclado mexe nela */
+    overscroll-behavior-y: none;
+}
+
 :root {
     --primary: #00897bd0;
     --primary-hover: #00897B;
@@ -25,11 +32,23 @@ body {
     background-color: var(--bg-body);
     background-image: none;
     color: var(--text-main);
+    
+    /* Volta para Flex para centralizar, MAS com height corrigido */
     display: flex;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 20px;
+    flex-direction: column;
+    justify-content: center; /* Centraliza verticalmente */
+    
+    /* Altura exata da viewport */
+    min-height: 100dvh; 
+    
+    /* ZERO padding vertical, apenas lateral */
+    padding: 0 20px; 
+    
+    /* Garante que nada vaze */
+    overflow-y: auto; 
 }
+
+
 
 .zen-container {
     width: 100%;
@@ -37,7 +56,13 @@ body {
     display: flex;
     flex-direction: column;
     gap: 24px;
-    margin-top: 40px;
+    
+    /* Adiciona o respiro vertical aqui dentro */
+    padding-top: 20px;
+    padding-bottom: 20px;
+    
+    /* Garante centralização */
+    margin: 0 auto; 
 }
 
 .hidden {
@@ -54,6 +79,7 @@ body {
     position: relative;
     overflow: hidden;
     height: 180px;
+    margin-bottom: 24px;
 }
 
 .hero-image {
@@ -180,7 +206,7 @@ body {
 .flow-form {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 24px;
     padding: 0 4px;
 }
 
@@ -292,7 +318,7 @@ body {
     /* RESPIRO VERTICAL: 
        Isso resolve o "amassado". Dá espaço para o botão crescer 
        sem encostar no label "Período" ou ser cortado embaixo. */
-    padding-top: 8px;
+    padding-top: 0;
     padding-bottom: 5px;
 
     /* Garante que nada vaze */
@@ -457,29 +483,30 @@ body {
     /* Padrão: Visível (Flex) */
     display: flex;
     position: absolute;
-    
+
     /* ALINHAMENTO VERTICAL PERFEITO */
     /* Como removemos o padding excessivo do wrapper, o 50% agora bate com o centro dos botões */
-    top: 50%;
+    top: 44%;
     transform: translateY(-50%);
     margin-top: -3px;
-    
+
     /* SOBREPOSIÇÃO (CAMADA) */
-    z-index: 20; /* Aumentei para 20 para garantir que fique ACIMA dos botões */
-    
+    z-index: 20;
+    /* Aumentei para 20 para garantir que fique ACIMA dos botões */
+
     /* TAMANHO IGUAL AO BOTÃO DE PERÍODO */
     width: 61px;
     height: 61px;
     border-radius: 50%;
-    
+
     /* Estilo Visual */
     background: #FFFFFF;
     color: var(--primary-hover);
     border: 2px solid #c8e5e4;
-    
+
     /* Sombra mais forte para destacar que está "flutuando" por cima */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -488,13 +515,13 @@ body {
 
 /* Ícone maior para acompanhar o botão de 60px */
 .mini-arrow span {
-    font-size: 32px; 
+    font-size: 32px;
 }
 
 /* POSICIONAMENTO LATERAL (Overlay) */
 /* Usamos valores negativos leves para ela morder a borda mas ficar em cima do carrossel */
 .mini-arrow.left {
-    left: -3px; 
+    left: -3px;
 }
 
 .mini-arrow.right {
