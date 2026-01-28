@@ -84,7 +84,6 @@ Implementação de duas estratégias distintas de consumo de dados:
 ## 6. Estrutura de Arquivos
 
 A arquitetura segue o princípio de Separação de Responsabilidades (SoC):
-
 ```text
 /
 ├── index.html          # Onboarding (Home)
@@ -96,7 +95,7 @@ A arquitetura segue o princípio de Separação de Responsabilidades (SoC):
 ├── db.json             # Base de dados (JSON)
 ├── tip_of_day.json     # Micro-serviço de frases
 └── assets/             # Imagens e ícones
-
+```
 ---
 
 ## 7. Decisões Técnicas e Limitações
@@ -132,9 +131,10 @@ Para garantir o funcionamento das requisições fetch:
 Declaro que este código foi desenvolvido por mim. Ferramentas de IA (Google Gemini) foram utilizadas de forma ética para:
 
 1. **Code Review:** Análise de erros de sintaxe e lógica.
+
 2. **Brainstorming:** Ideação de arquitetura CSS e refinamento de fluxos de UX.
 
 Toda a lógica de negócio, estrutura de dados e identidade visual são autorais.
 
 ---
-**Desenvolvido por:** Diego Aquino Souza 
+**Desenvolvido por:** Diego Aquino Souza
