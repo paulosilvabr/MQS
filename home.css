@@ -31,6 +31,8 @@ body {
     padding: 20px;
 }
 
+
+
 .zen-container {
     width: 100%;
     max-width: 420px;
@@ -457,29 +459,30 @@ body {
     /* Padrão: Visível (Flex) */
     display: flex;
     position: absolute;
-    
+
     /* ALINHAMENTO VERTICAL PERFEITO */
     /* Como removemos o padding excessivo do wrapper, o 50% agora bate com o centro dos botões */
     top: 50%;
     transform: translateY(-50%);
     margin-top: -3px;
-    
+
     /* SOBREPOSIÇÃO (CAMADA) */
-    z-index: 20; /* Aumentei para 20 para garantir que fique ACIMA dos botões */
-    
+    z-index: 20;
+    /* Aumentei para 20 para garantir que fique ACIMA dos botões */
+
     /* TAMANHO IGUAL AO BOTÃO DE PERÍODO */
     width: 61px;
     height: 61px;
     border-radius: 50%;
-    
+
     /* Estilo Visual */
     background: #FFFFFF;
     color: var(--primary-hover);
     border: 2px solid #c8e5e4;
-    
+
     /* Sombra mais forte para destacar que está "flutuando" por cima */
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+
     align-items: center;
     justify-content: center;
     cursor: pointer;
@@ -488,13 +491,13 @@ body {
 
 /* Ícone maior para acompanhar o botão de 60px */
 .mini-arrow span {
-    font-size: 32px; 
+    font-size: 32px;
 }
 
 /* POSICIONAMENTO LATERAL (Overlay) */
 /* Usamos valores negativos leves para ela morder a borda mas ficar em cima do carrossel */
 .mini-arrow.left {
-    left: -3px; 
+    left: -3px;
 }
 
 .mini-arrow.right {
@@ -521,36 +524,4 @@ body {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-50%) scale(0.8);
-}
-
-/* --- APP FOOTER (Rodapé Padrão) --- */
-.app-footer {
-    text-align: center;
-    margin-top: 52px;
-    width: 100%;
-    color: var(--text-muted);
-    font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    opacity: 0.9;
-}
-
-.app-footer p {
-    margin: 4px 0 0 0;
-}
-
-.footer-brand {
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    color: var(--text-muted);
-}
-
-.footer-credits strong {
-    font-weight: 600;
-    color: var(--text-muted);
-}
-
-.footer-link {
-    font-size: 0.85rem;
-    opacity: 0.8;
 }
