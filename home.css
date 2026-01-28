@@ -1,5 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* --- ESTABILIDADE MOBILE --- */
+html {
+    height: 100%;
+    /* Previne que a página inteira balance quando o teclado mexe nela */
+    overscroll-behavior-y: none;
+}
+
 :root {
     --primary: #00897bd0;
     --primary-hover: #00897B;
@@ -463,7 +470,7 @@ body {
 
     /* ALINHAMENTO VERTICAL PERFEITO */
     /* Como removemos o padding excessivo do wrapper, o 50% agora bate com o centro dos botões */
-    top: 50%;
+    top: 44%;
     transform: translateY(-50%);
     margin-top: -3px;
 

@@ -206,4 +206,22 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(updateMiniArrows, 500);
         window.addEventListener('load', updateMiniArrows);
     }
+
+    // ============================================================
+    // FIX DO TECLADO MOBILE (Scroll Return)
+    // ============================================================
+    // Garante que a página desça de volta ao topo quando o teclado fecha
+    const allInputs = document.querySelectorAll('input');
+
+    allInputs.forEach(input => {
+        input.addEventListener('blur', () => {
+            // Pequeno delay para esperar a animação do teclado terminar
+            setTimeout(() => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            }, 200);
+        });
+    });
 });

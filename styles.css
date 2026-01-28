@@ -511,7 +511,7 @@ body {
     display: flex;
     position: absolute;
     /* 🧠 ALINHAMENTO UNIFICADO: 14% coloca a seta na linha do Título/Intervalo */
-    top: 11%;
+    top: 9%;
     transform: translateY(-50%);
     z-index: 100;
 
@@ -568,7 +568,7 @@ body {
     .nav-arrow {
         width: 60px;
         height: 60px;
-        top: 14%;
+        top: 11%;
         /* Sombra mais forte (Profundidade Nível 3) */
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
     }
