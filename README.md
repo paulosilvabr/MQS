@@ -20,9 +20,9 @@ Um facilitador logístico que atua como um "colega digital". Através de persist
 ### 📸 Screenshots
 
 **📱 Fluxo Mobile (PWA)**
-| 1. Onboarding (Novo Usuário) | 2. Warm Start (Retorno) | 3. Visualização (Card) |
+| 1. Onboarding (Novo Usuário) | 2 . Visualização (Card) | 3. Warm Start (Retorno) |
 |:---:|:---:|:---:|
-| <img src="./assets/print_home.png" width="250" alt="Tela Inicial"> | <img src="./assets/print_warm.png" width="250" alt="Tela de Warm Start"> | <img src="./assets/print_grade.png" width="250" alt="Grade em Card"> |
+| <img src="./assets/print_home.png" width="250" alt="Tela Inicial"> | <img src="./assets/print_grade.png" width="250" alt="Grade em Card"> | <img src="./assets/print_warm.png" width="250" alt="Tela de Warm Start"> |
 
 <br>
 
