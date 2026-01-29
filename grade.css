@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
+/* ========================================= */
+/* VARIÁVEIS GLOBAIS (DESIGN TOKENS)         */
+/* ========================================= */
 :root {
-    /* --- PALETA ZEN --- */
+    /* Paleta de Cores */
     --primary: #00897bd0;
     --primary-hover: #00897B;
     --primary-light: #c8e5e4;
@@ -14,13 +17,16 @@
     --text-medium: #008b7e;
     --text-muted: #8E8E93;
 
-    /* --- GEOMETRIA --- */
+    /* Geometria e Espaçamento */
     --radius-day: 32px;
     --radius-item: 24px;
     --radius-pill: 9999px;
     --spacing-p4: 16px;
 }
 
+/* ========================================= */
+/* RESET & BASE STYLES                       */
+/* ========================================= */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -34,13 +40,12 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     padding-bottom: 40px;
-    /* Apenas um respiro normal */
     overflow-x: hidden;
 }
 
-/* ==========================================================================
-   BANNER (Estilo do Card de Imagem)
-   ========================================================================== */
+/* ========================================= */
+/* COMPONENTE: HERO / BANNER                 */
+/* ========================================= */
 .hero-card {
     background: #FFFFFF;
     border-radius: 24px;
@@ -61,54 +66,43 @@ body {
     display: block;
 }
 
-/* ==========================================================================
-   HEADER (VISUAL CARD FLUTUANTE - LARGURA MOBILE EXACT MATCH)
-   ========================================================================== */
+/* ========================================= */
+/* COMPONENTE: HEADER (CONTEXTO)             */
+/* ========================================= */
 .context-header {
     position: relative;
     background: transparent;
     backdrop-filter: none;
     border: none;
-
-    /* Espaço para o card flutuar */
     padding: 24px 20px 0 20px;
     width: 100%;
     z-index: 50;
 }
 
 .header-content {
-    /* TRANSFORMAÇÃO EM CARD */
     background: #FFFFFF;
     border-radius: 24px;
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-
-    /* Tamanho EXATO da Home (420px) */
     width: 100%;
     height: 60px;
     max-width: 420px;
     margin: 0 auto;
     padding: 16px 24px;
-
-    /* Layout Interno */
     display: flex;
     align-items: center;
     justify-content: center;
-    /* <--- AQUI: Centraliza o conjunto Logo + Texto */
     gap: 16px;
-
-    /* Animação */
     animation: slideDown 0.5s ease;
     transition: max-width 0.3s ease;
 }
 
-/* Desktop: Força a manter 420px para consistência total */
+/* Ajuste de consistência para Desktop */
 @media (min-width: 1024px) {
     .header-content {
         max-width: 420px;
     }
 }
 
-/* Badge MQS */
 .logo-small {
     background: var(--primary);
     color: white;
@@ -119,15 +113,12 @@ body {
     font-family: 'Inter', sans-serif;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 10px rgba(0, 137, 123, 0.2);
-    /* Garante que o logo não encolha se o texto for grande */
     flex-shrink: 0;
 }
 
-/* Textos */
 .user-context {
     display: flex;
     flex-direction: column;
-    /* Garante que o texto quebre linha se precisar */
     min-width: 0;
 }
 
@@ -138,7 +129,6 @@ body {
     color: var(--primary-dark);
     margin: 0;
     line-height: 1.2;
-    /* Truncar texto se for muito longo para 420px */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -163,41 +153,32 @@ body {
     }
 }
 
+/* ========================================= */
+/* SISTEMA DE LAYOUT (SCHEDULE VIEW)         */
+/* ========================================= */
 
-/* ==========================================================================
-   SISTEMA DE LAYOUT
-   ========================================================================== */
-
-/* 1. MODO HORIZONTAL PADRÃO (Efeito Mobile em todos os tamanhos) */
+/* Visualização Horizontal (Mobile First) */
 .schedule-view {
     display: flex;
     flex-direction: row;
-    /* Força linha única */
     width: 100%;
-
-    /* Habilita o Eixo X com Estouro Controlado */
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-
-    /* Padding e Alinhamento */
     padding: 24px 20px 18px 20px;
     align-items: start;
     gap: 16px;
 }
 
-/* 2. LIMITAR FLEXIBILIDADE (Evita que os cards estiquem) */
+/* Controle de largura dos cards para evitar estiramento */
 .schedule-view .day-card {
     flex: 0 0 auto;
-    /* Não cresce, não encolhe */
     width: 85vw;
-    /* Tamanho mobile-first */
     max-width: 400px;
-    /* Trava em telas grandes */
     scroll-snap-align: center;
 }
 
-/* Esconder scrollbar para manter o visual Zen */
+/* Ocultação de Scrollbar (UX) */
 .schedule-view::-webkit-scrollbar {
     display: none;
 }
@@ -213,56 +194,38 @@ body {
     height: 100%;
 }
 
-/* 2.1 ZONA DE ESTABILIDADE (Tablets e Janelas Médias) */
-/* Resolve o efeito "esticado" fixando a largura em um valor harmônico */
+/* Ajustes Intermediários (Tablets) */
 @media (min-width: 500px) and (max-width: 1023px) {
     .schedule-view .day-card {
         width: 270px;
-        /* Tamanho fixo, próximo ao do Desktop */
         max-width: 270px;
-        /* Força bruta para impedir o estiramento */
     }
 }
 
-
-/* 3. MODO DESKTOP */
+/* Visualização Desktop (Grid Layout) */
 @media (min-width: 1024px) {
 
     .schedule-view,
     .schedule-view--horizontal {
         display: grid;
-        /* Força os cards a criarem novas colunas lateralmente, nunca linhas */
         grid-auto-flow: column;
         grid-auto-columns: minmax(270px, 300px);
         gap: 24px;
-
         width: 100%;
         max-width: 100%;
-        /* Garante que o container não ultrapasse a tela */
         margin: 0 auto;
         justify-content: start;
-
         overflow-x: auto;
-        /* Base para o scroll e para as setas funcionarem */
         scroll-snap-type: x mandatory;
-
         padding: 40px;
         padding-bottom: 16px;
-
         overflow-x: auto;
-
-        /* --- SCROLLBAR OCULTA (Navegação por Setas) --- */
         scrollbar-width: none;
-        /* Firefox */
-
     }
 
-    /* ==========================================================================
-   AJUSTE PARA TELAS GRANDES (Monitor Wide / Full HD)
-   ========================================================================== */
+    /* Ajuste para telas Wide/Full HD */
     @media (min-width: 1600px) {
         .schedule-view {
-            /* Centraliza o bloco de cards na tela quando sobra espaço */
             justify-content: center !important;
         }
     }
@@ -281,36 +244,26 @@ body {
     }
 
     .header-content {
-        /* TRANSFORMAÇÃO EM CARD */
         background: #FFFFFF;
         border-radius: 24px;
         box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
-
-        /* Tamanho EXATO da Home (420px) */
         width: 100%;
         height: 60px;
         max-width: 420px;
         margin: 0 auto;
         padding: 16px 24px;
-
-        /* Layout Interno */
         display: flex;
         align-items: center;
         justify-content: center;
-        /* <--- AQUI: Centraliza o conjunto Logo + Texto */
         gap: 16px;
-
-        /* Animação */
         animation: slideDown 0.5s ease;
         transition: max-width 0.3s ease;
     }
 
     .day-card {
         scroll-snap-align: start;
-        /* Faz o card 'grudar' no início ao scrollar */
     }
 
-    /* Esconde no Chrome, Safari e Edge */
     .schedule-view::-webkit-scrollbar,
     .schedule-view--horizontal::-webkit-scrollbar {
         display: none;
@@ -325,8 +278,9 @@ body {
     }
 }
 
-
-/* --- COMPONENTES --- */
+/* ========================================= */
+/* COMPONENTES ESPECÍFICOS DO CARD           */
+/* ========================================= */
 .day-card {
     background: var(--primary-medium);
     border-radius: var(--radius-day);
@@ -394,30 +348,22 @@ body {
     margin-bottom: 12px;
 }
 
-/* Dock de Ações (Agora estático) */
+/* ========================================= */
+/* FLOATING ACTION DOCK                      */
+/* ========================================= */
 .floating-dock {
-    /* Posição no fluxo normal */
     position: relative;
-
-    /* Centraliza e dá espaço da grade */
     margin: 12px auto 40px auto;
-
-    /* Mantém o visual de pílula elegante */
     width: max-content;
     max-width: 90vw;
     background: rgba(255, 255, 255, 0.95);
-
-    /* Mantém o estilo glassmorphism */
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-
     padding: 8px 8px 8px 24px;
     border-radius: 9999px;
     display: flex;
     align-items: center;
     gap: 16px;
-
-    /* Sombra suave */
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
     z-index: 99;
 }
@@ -469,9 +415,9 @@ body {
     }
 }
 
-/* ==========================================================================
-   ESTADOS DE INTERFACE (LOADING & ERROR)
-   ========================================================================== */
+/* ========================================= */
+/* ESTADOS DE INTERFACE (LOADING & ERROR)    */
+/* ========================================= */
 .loading-state,
 .error-state {
     display: flex;
@@ -501,30 +447,27 @@ body {
     margin-bottom: 8px;
 }
 
-/* Animação de Rotação (Loading) */
 .spin {
     animation: spin 1s linear infinite;
 }
 
-/* --- SETAS DE NAVEGAÇÃO (Globais para Mouse) --- */
+/* ========================================= */
+/* NAVEGAÇÃO POR SETAS                       */
+/* ========================================= */
 .nav-arrow {
     display: flex;
     position: absolute;
-    /* 🧠 ALINHAMENTO UNIFICADO: 14% coloca a seta na linha do Título/Intervalo */
+    /* Alinhamento óptico com o conteúdo do card */
     top: 9%;
     transform: translateY(-50%);
     z-index: 100;
-
     background: var(--surface);
     color: var(--primary-dark);
     border: 2px solid var(--primary-light);
     width: 60px;
-    /* Um pouco menor em telas pequenas para não cobrir muito */
     height: 60px;
     border-radius: 50%;
-
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-
     cursor: pointer;
     align-items: center;
     justify-content: center;
@@ -549,27 +492,25 @@ body {
     font-size: 28px;
 }
 
-/* Classe para esconder */
 .nav-arrow.is-hidden {
     opacity: 0;
     pointer-events: none;
     transform: translateY(-50%) scale(0.8);
 }
 
-/* 🧠 NEURO-ADAPTAÇÃO: Esconde as setas APENAS se o dispositivo for de toque (Dedo) */
+/* Oculta navegação por setas em dispositivos de toque (touch-first) */
 @media (pointer: coarse) {
     .nav-arrow {
         display: none !important;
     }
 }
 
-/* Ajuste específico para Desktop (Setas maiores e posição refinada) */
+/* Estilização para Desktop */
 @media (min-width: 1024px) {
     .nav-arrow {
         width: 60px;
         height: 60px;
         top: 11%;
-        /* Sombra mais forte (Profundidade Nível 3) */
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), 0 2px 6px rgba(0, 0, 0, 0.1);
     }
 
@@ -591,7 +532,6 @@ body {
         transform: translateY(-50%) scale(1.1);
     }
 
-    /* Classe para esconder com suavidade */
     .nav-arrow.is-hidden {
         opacity: 0;
         pointer-events: none;
@@ -612,7 +552,9 @@ body {
     margin-top: 40px;
 }
 
-/* --- APP FOOTER (Rodapé Padrão) --- */
+/* ========================================= */
+/* RODAPÉ DA APLICAÇÃO                       */
+/* ========================================= */
 .app-footer {
     text-align: center;
     margin-top: 65px;
