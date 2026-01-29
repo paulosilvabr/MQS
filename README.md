@@ -118,18 +118,26 @@ Implementação de duas estratégias de consumo de dados para fins didáticos e 
 
 ## 6. Estrutura de Arquivos
 
-A arquitetura segue o princípio de Separação de Responsabilidades (SoC):
+A arquitetura segue o princípio de Separação de Responsabilidades (SoC), garantindo paridade entre nomes de visualização e lógica:
 ```text
 /
-├── index.html          # Onboarding (Home)
-├── grade.html          # Visualização da Grade
-├── styles.css          # Design System Global
-├── home.css            # Estilos específicos da Home
+├── index.html          # Onboarding (Home - Ponto de Entrada)
+├── grade.html          # Visualização da Grade (App Principal)
+│
+├── home.css            # Estilos exclusivos da Home
 ├── home.js             # Lógica da Home (Validação + LocalStorage)
-├── app.js              # Motor da Grade (Async + Renderização)
-├── db.json             # Base de dados (JSON)
-├── tip_of_day.json     # Micro-serviço de frases
-└── assets/             # Imagens e ícones
+│
+├── grade.css           # Estilos da Grade (Antigo styles.css)
+├── grade.js            # Motor da Grade (Async + Renderização - Antigo app.js)
+│
+├── db.json             # Base de dados Mock (Grade Horária)
+├── tip_of_day.json     # Micro-serviço de frases (Dica do dia)
+│
+├── manifest.json       # Configuração PWA (Instalabilidade)
+├── package.json        # Gerenciamento de Dependências e Scripts
+├── README.md           # Documentação Geral do Projeto
+│
+└── assets/             # Imagens, ícones e banners
 ```
 ---
 
@@ -158,7 +166,8 @@ Para garantir o funcionamento das requisições fetch:
 
 4.  Ou via terminal (Node.js):
     ```bash
-    npx http-server .
+    npx http-server
+    ```
 
 ---
 
