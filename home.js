@@ -2,6 +2,8 @@
  * Controlador principal da Home.
  * Gerencia a inicialização da aplicação, alternância entre estados (Warm Start/Formulário),
  * validação de entradas e interações de UI.
+ * * @author Diego Aquino
+ * @contributor Paulo Ricardo Sousa Silva
  */
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -155,10 +157,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Validação de Grade Específica (Regra de Negócio Temporária)
         if (isSistemas) {
             const isMatutino = userSelection.shift === 'matutino';
-            const isSegundoPeriodo = userSelection.period === '2';
-            if (!isMatutino || !isSegundoPeriodo) {
+            const isPeriodoValido = userSelection.period === '2' || userSelection.period === '3';
+            if (!isMatutino || !isPeriodoValido) {
                 const turnoEscolhido = userSelection.shift.charAt(0).toUpperCase() + userSelection.shift.slice(1);
-                showError(`Grade de ${userSelection.period}º ${turnoEscolhido} não cadastrada. Apenas 2º Matutino disponível.`);
+                showError(`Grade de ${userSelection.period}º ${turnoEscolhido} não cadastrada. Apenas 2º e 3º Matutino disponíveis.`);
                 return;
             }
         }
