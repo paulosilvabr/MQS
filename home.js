@@ -7,25 +7,40 @@
  */
 document.addEventListener('DOMContentLoaded', () => {
 
+    // ============================================================
+    // SELEÇÃO DE ELEMENTOS DO DOM
+    // ============================================================
+    
+    // Containers Principais
     const form = document.getElementById('selection-form');
     const warmDiv = document.getElementById('warm-welcome');
 
+    // Componentes do Warm Start (Estado Logado)
     const savedCourse = document.getElementById('saved-course');
     const savedDetails = document.getElementById('saved-details');
     const quickBtn = document.getElementById('btn-quick-access');
     const resetBtn = document.getElementById('btn-reset-app');
     const tipTextElement = document.getElementById('warm-tip-text');
 
+    // Componentes do Formulário (Novo Acesso)
     const courseInput = document.getElementById('course-input');
     const shiftBtns = document.querySelectorAll('.choice-chip');
     const periodBtns = document.querySelectorAll('.chip-btn');
     const submitBtn = document.getElementById('btn-ver-horarios');
     const feedbackMsg = document.getElementById('form-feedback');
 
+    // Componentes de Navegação (Scroll Horizontal)
     const scrollContainer = document.getElementById('period-selector');
     const btnLeft = document.getElementById('btn-scroll-left');
     const btnRight = document.getElementById('btn-scroll-right');
 
+    /**
+     * Gerencia a visibilidade das setas de navegação horizontal no seletor de períodos.
+     * Calcula dinamicamente se o conteúdo excede a largura do container e 
+     * oculta as setas nos limites de rolagem (início e fim).
+     * * @function updateMiniArrows
+     * @returns {void}
+     */
     const updateMiniArrows = () => {
         if (!scrollContainer || !btnLeft || !btnRight) return;
         
@@ -47,19 +62,40 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    /**
+     * Objeto que armazena a seleção atual do usuário no formulário.
+     * * @type {Object}
+     * @property {string} course - Nome do curso digitado.
+     * @property {string|null} shift - Turno selecionado (ex: 'matutino', 'noturno').
+     * @property {string|null} period - Período selecionado (ex: '1', '2', etc).
+     */
     let userSelection = { course: '', shift: null, period: null };
 
+    /**
+     * Lista de cursos permitidos e reconhecidos pelo sistema para validação básica.
+     * * @constant {string[]}
+     */
     const ALLOWED_COURSES = [
         "Sistemas para Internet",
         "sistemas para internet",
         "Sistemas Para Internet"
     ];
 
+    /**
+     * Dados de sessão salvos no LocalStorage para iniciar a aplicação no modo Warm Start.
+     * @type {string|null}
+     */
     const savedData = localStorage.getItem('mqs_user_data');
     const urlParams = new URLSearchParams(window.location.search);
     
+    /**
+     * Flag que indica se o usuário solicitou explicitamente voltar à tela de busca,
+     * ignorando os dados salvos no LocalStorage.
+     * @type {boolean}
+     */
     const forceNewSearch = urlParams.get('action') === 'search';
 
+    // Inicialização da interface (Warm Start vs Formulário)
     if (savedData && !forceNewSearch) {
         const data = JSON.parse(savedData);
         form.classList.add('hidden');
@@ -78,8 +114,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
+    // Redireciona para a grade usando os dados já salvos
     quickBtn.addEventListener('click', () => window.location.href = 'grade.html');
 
+    // Reseta o estado da aplicação e limpa o LocalStorage
     resetBtn.addEventListener('click', () => {
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
@@ -95,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(updateMiniArrows, 50);
     });
 
+    // Captura a seleção de turno
     shiftBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             userSelection.shift = btn.getAttribute('data-value');
@@ -102,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Captura a seleção de período
     periodBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             userSelection.period = btn.getAttribute('data-value');
@@ -109,6 +149,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Processa a submissão do formulário
     submitBtn.addEventListener('click', () => {
         const courseValue = courseInput.value.trim();
         
@@ -122,13 +163,11 @@ document.addEventListener('DOMContentLoaded', () => {
         const isSistemas = ALLOWED_COURSES.includes(courseValue);
         if (!isSistemas) { showError(`O curso "${courseValue}" estará disponível em breve!`); return; }
 
-        // --- NOVA VALIDAÇÃO DOS PERÍODOS 7 E 8 ---
         if (isSistemas && (userSelection.period === '7' || userSelection.period === '8')) {
             showError(`Não existe ${userSelection.period}º período para esse curso.`);
             return;
         }
 
-        // Validação de turno
         if (isSistemas) {
             const isMatutino = userSelection.shift === 'matutino';
             if (!isMatutino) {
@@ -142,6 +181,14 @@ document.addEventListener('DOMContentLoaded', () => {
         window.location.href = 'grade.html';
     });
 
+    /**
+     * Atualiza o estado visual de uma lista de botões (chips), aplicando 
+     * a classe 'active' àquele que corresponde ao valor selecionado.
+     * * @function updateVisuals
+     * @param {NodeListOf<Element>} nodeList - NodeList dos botões que serão iterados.
+     * @param {string} value - O atributo 'data-value' correspondente ao botão que deve ser ativado.
+     * @returns {void}
+     */
     function updateVisuals(nodeList, value) {
         nodeList.forEach(btn => {
             if (btn.getAttribute('data-value') === value) {
@@ -150,6 +197,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    /**
+     * Exibe uma mensagem de erro na interface do usuário e aplica uma animação
+     * de tremor (shake) no formulário para chamar a atenção.
+     * * @function showError
+     * @param {string} message - A mensagem de erro que será exibida ao usuário.
+     * @returns {void}
+     */
     function showError(message) {
         feedbackMsg.innerHTML = `<span class="material-symbols-rounded">error</span> ${message}`;
         feedbackMsg.classList.remove('hidden');
@@ -158,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => form.classList.remove('shake-anim'), 500);
     }
 
+    // Busca de forma assíncrona a "dica do dia" para exibição no Warm Start
     if (savedData) {
         fetch('tip_of_day.json')
             .then(response => {
@@ -174,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    // Configuração de eventos para o carrossel horizontal de períodos
     if (scrollContainer && btnLeft && btnRight) {
         btnLeft.addEventListener('click', () => scrollContainer.scrollBy({ left: -200, behavior: 'smooth' }));
         btnRight.addEventListener('click', () => scrollContainer.scrollBy({ left: 200, behavior: 'smooth' }));
@@ -187,8 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
         window.addEventListener('load', updateMiniArrows);
     }
 
+    // Rola a tela para o topo após o blur dos inputs
     const allInputs = document.querySelectorAll('input');
-
     allInputs.forEach(input => {
         input.addEventListener('blur', () => {
             setTimeout(() => {
