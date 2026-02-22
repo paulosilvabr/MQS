@@ -35,8 +35,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnRight = document.getElementById('btn-scroll-right');
 
     /**
-     * Gerencia a visibilidade das setas de navegação horizontal.
-     * Calcula se o conteúdo excede a largura do container e oculta setas nos limites.
+     * Gerencia a visibilidade das setas de navegação horizontal no seletor de períodos.
+     * Calcula dinamicamente se o conteúdo excede a largura do container e 
+     * oculta as setas nos limites de rolagem (início e fim).
+     * * @function updateMiniArrows
+     * @returns {void}
      */
     const updateMiniArrows = () => {
         if (!scrollContainer || !btnLeft || !btnRight) return;
@@ -45,42 +48,54 @@ document.addEventListener('DOMContentLoaded', () => {
         const clientWidth = scrollContainer.offsetWidth;
         const scrollLeft = scrollContainer.scrollLeft;
 
-        // Verifica se há conteúdo suficiente para rolar
         const isScrollable = scrollWidth > (clientWidth + 10);
 
         if (!isScrollable) {
             btnLeft.classList.add('hidden');
             btnRight.classList.add('hidden');
         } else {
-            // Controle da seta esquerda (início)
             if (scrollLeft <= 5) btnLeft.classList.add('hidden');
             else btnLeft.classList.remove('hidden');
 
-            // Controle da seta direita (fim)
             if (scrollLeft >= (scrollWidth - clientWidth - 5)) btnRight.classList.add('hidden');
             else btnRight.classList.remove('hidden');
         }
     };
 
-    // Estado local da seleção do usuário
+    /**
+     * Objeto que armazena a seleção atual do usuário no formulário.
+     * * @type {Object}
+     * @property {string} course - Nome do curso digitado.
+     * @property {string|null} shift - Turno selecionado (ex: 'matutino', 'noturno').
+     * @property {string|null} period - Período selecionado (ex: '1', '2', etc).
+     */
     let userSelection = { course: '', shift: null, period: null };
 
+    /**
+     * Lista de cursos permitidos e reconhecidos pelo sistema para validação básica.
+     * * @constant {string[]}
+     */
     const ALLOWED_COURSES = [
         "Sistemas para Internet",
         "sistemas para internet",
         "Sistemas Para Internet"
     ];
 
-    // ============================================================
-    // LÓGICA DE INICIALIZAÇÃO E ESTADO
-    // ============================================================
+    /**
+     * Dados de sessão salvos no LocalStorage para iniciar a aplicação no modo Warm Start.
+     * @type {string|null}
+     */
     const savedData = localStorage.getItem('mqs_user_data');
     const urlParams = new URLSearchParams(window.location.search);
     
-    // Verifica se a ação é uma nova busca explícita via URL
+    /**
+     * Flag que indica se o usuário solicitou explicitamente voltar à tela de busca,
+     * ignorando os dados salvos no LocalStorage.
+     * @type {boolean}
+     */
     const forceNewSearch = urlParams.get('action') === 'search';
 
-    // Decide entre exibir o Warm Start ou o Formulário Limpo
+    // Inicialização da interface (Warm Start vs Formulário)
     if (savedData && !forceNewSearch) {
         const data = JSON.parse(savedData);
         form.classList.add('hidden');
@@ -94,20 +109,16 @@ document.addEventListener('DOMContentLoaded', () => {
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
 
-        // Limpa a URL para evitar loop de estado ao recarregar a página
         if (forceNewSearch) {
             window.history.replaceState({}, document.title, window.location.pathname);
         }
     }
-
-    // ============================================================
-    // INTERAÇÕES DE USUÁRIO
-    // ============================================================
     
+    // Redireciona para a grade usando os dados já salvos
     quickBtn.addEventListener('click', () => window.location.href = 'grade.html');
 
+    // Reseta o estado da aplicação e limpa o LocalStorage
     resetBtn.addEventListener('click', () => {
-        // Limpeza total do estado e persistência
         localStorage.removeItem('mqs_user_data');
         warmDiv.classList.add('hidden');
         form.classList.remove('hidden');
@@ -122,6 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(updateMiniArrows, 50);
     });
 
+    // Captura a seleção de turno
     shiftBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             userSelection.shift = btn.getAttribute('data-value');
@@ -129,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Captura a seleção de período
     periodBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             userSelection.period = btn.getAttribute('data-value');
@@ -136,13 +149,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // ============================================================
-    // VALIDAÇÃO E SUBMISSÃO
-    // ============================================================
+    // Processa a submissão do formulário
     submitBtn.addEventListener('click', () => {
         const courseValue = courseInput.value.trim();
         
-        // Validações básicas de preenchimento
         if (!courseValue) { showError("Por favor, digite o nome do curso!"); return; }
 
         if (!userSelection.shift || !userSelection.period) {
@@ -150,31 +160,34 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Validação de Curso Permitido (Hardcoded MVP)
         const isSistemas = ALLOWED_COURSES.includes(courseValue);
         if (!isSistemas) { showError(`O curso "${courseValue}" estará disponível em breve!`); return; }
 
-        // Validação de Grade Específica (Regra de Negócio Temporária)
+        if (isSistemas && (userSelection.period === '7' || userSelection.period === '8')) {
+            showError(`Não existe ${userSelection.period}º período para esse curso.`);
+            return;
+        }
+
         if (isSistemas) {
             const isMatutino = userSelection.shift === 'matutino';
-            const isPeriodoValido = userSelection.period === '2' || userSelection.period === '3';
-            if (!isMatutino || !isPeriodoValido) {
-                const turnoEscolhido = userSelection.shift.charAt(0).toUpperCase() + userSelection.shift.slice(1);
-                showError(`Grade de ${userSelection.period}º ${turnoEscolhido} não cadastrada. Apenas 2º e 3º Matutino disponíveis.`);
+            if (!isMatutino) {
+                showError(`Apenas o turno Matutino está disponível para este curso no momento.`);
                 return;
             }
         }
 
-        // Persistência e Redirecionamento
         userSelection.course = courseValue;
         localStorage.setItem('mqs_user_data', JSON.stringify(userSelection));
         window.location.href = 'grade.html';
     });
 
     /**
-     * Atualiza o estado visual (classe 'active') de um grupo de botões.
-     * @param {NodeList} nodeList - Lista de elementos DOM a serem iterados.
-     * @param {string} value - O valor selecionado atualmente.
+     * Atualiza o estado visual de uma lista de botões (chips), aplicando 
+     * a classe 'active' àquele que corresponde ao valor selecionado.
+     * * @function updateVisuals
+     * @param {NodeListOf<Element>} nodeList - NodeList dos botões que serão iterados.
+     * @param {string} value - O atributo 'data-value' correspondente ao botão que deve ser ativado.
+     * @returns {void}
      */
     function updateVisuals(nodeList, value) {
         nodeList.forEach(btn => {
@@ -185,8 +198,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Exibe feedback visual de erro e aplica animação de "shake".
-     * @param {string} message - Mensagem a ser exibida.
+     * Exibe uma mensagem de erro na interface do usuário e aplica uma animação
+     * de tremor (shake) no formulário para chamar a atenção.
+     * * @function showError
+     * @param {string} message - A mensagem de erro que será exibida ao usuário.
+     * @returns {void}
      */
     function showError(message) {
         feedbackMsg.innerHTML = `<span class="material-symbols-rounded">error</span> ${message}`;
@@ -196,11 +212,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => form.classList.remove('shake-anim'), 500);
     }
 
-    // ============================================================
-    // FUNCIONALIDADE: DICA DO DIA
-    // ============================================================
+    // Busca de forma assíncrona a "dica do dia" para exibição no Warm Start
     if (savedData) {
-        // Fetch em arquivo local para garantir funcionamento offline/PWA
         fetch('tip_of_day.json')
             .then(response => {
                 if (!response.ok) throw new Error('Erro ao ler dicas');
@@ -216,9 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
-    // ============================================================
-    // LISTENERS DE NAVEGAÇÃO E UX
-    // ============================================================
+    // Configuração de eventos para o carrossel horizontal de períodos
     if (scrollContainer && btnLeft && btnRight) {
         btnLeft.addEventListener('click', () => scrollContainer.scrollBy({ left: -200, behavior: 'smooth' }));
         btnRight.addEventListener('click', () => scrollContainer.scrollBy({ left: 200, behavior: 'smooth' }));
@@ -226,19 +237,14 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollContainer.addEventListener('scroll', updateMiniArrows);
         window.addEventListener('resize', updateMiniArrows);
 
-        // Verificações em múltiplos momentos para garantir renderização correta
         updateMiniArrows();
         setTimeout(updateMiniArrows, 100);
         setTimeout(updateMiniArrows, 500);
         window.addEventListener('load', updateMiniArrows);
     }
 
-    /**
-     * Fix para UX Mobile: Retorna o scroll ao topo quando o teclado virtual fecha.
-     * Evita que o layout fique "quebrado" ou deslocado em dispositivos iOS/Android.
-     */
+    // Rola a tela para o topo após o blur dos inputs
     const allInputs = document.querySelectorAll('input');
-
     allInputs.forEach(input => {
         input.addEventListener('blur', () => {
             setTimeout(() => {
