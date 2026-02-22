@@ -256,6 +256,143 @@
                 { "type": "class", "timeStart": "09:15", "timeEnd": "10:45", "subject": "Extensão III", "room": "LABMOB", "prof": "Carlos Henrique" }
               ]
             }
+          ],
+          "3": [
+            {
+              "day": "Segunda",
+              "items": [
+                {
+                  "type": "class",
+                  "timeStart": "07:30",
+                  "timeEnd": "09:00",
+                  "subject": "Programação para Web I",
+                  "room": "LABTEC",
+                  "prof": "Vinicius Costa"
+                },
+                {
+                  "type": "interval",
+                  "timeStart": "09:00",
+                  "timeEnd": "09:15",
+                  "label": "INTERVALO"
+                },
+                {
+                  "type": "class",
+                  "timeStart": "09:15",
+                  "timeEnd": "10:45",
+                  "subject": "Programação para Web I",
+                  "room": "LABTEC",
+                  "prof": "Vinicius Costa"
+                }
+              ]
+            },
+            {
+              "day": "Terça",
+              "items": [
+                {
+                  "type": "class",
+                  "timeStart": "07:30",
+                  "timeEnd": "09:00",
+                  "subject": "Prog. para Web Designers",
+                  "room": "LABTEC",
+                  "prof": "Wilson Wolf Costa"
+                },
+                {
+                  "type": "interval",
+                  "timeStart": "09:00",
+                  "timeEnd": "09:15",
+                  "label": "INTERVALO"
+                },
+                {
+                  "type": "class",
+                  "timeStart": "09:15",
+                  "timeEnd": "10:45",
+                  "subject": "Prog. para Web Designers",
+                  "room": "LABTEC",
+                  "prof": "Wilson Wolf Costa"
+                }
+              ]
+            },
+            {
+              "day": "Quarta",
+              "items": [
+                {
+                  "type": "class",
+                  "timeStart": "07:30",
+                  "timeEnd": "09:00",
+                  "subject": "Prog. para Banco de Dados",
+                  "room": "LABTEC",
+                  "prof": "Simone Dutra Martins Guarda"
+                },
+                {
+                  "type": "interval",
+                  "timeStart": "09:00",
+                  "timeEnd": "09:15",
+                  "label": "INTERVALO"
+                },
+                {
+                  "type": "class",
+                  "timeStart": "09:15",
+                  "timeEnd": "10:45",
+                  "subject": "Prog. para Banco de Dados",
+                  "room": "LABTEC",
+                  "prof": "Simone Dutra Martins Guarda"
+                }
+              ]
+            },
+            {
+              "day": "Quinta",
+              "items": [
+                {
+                  "type": "class",
+                  "timeStart": "07:30",
+                  "timeEnd": "09:00",
+                  "subject": "Aplic. de Estru. de Dados",
+                  "room": "LABTEC",
+                  "prof": "Carlos Henrique"
+                },
+                {
+                  "type": "interval",
+                  "timeStart": "09:00",
+                  "timeEnd": "09:15",
+                  "label": "INTERVALO"
+                },
+                {
+                  "type": "class",
+                  "timeStart": "09:15",
+                  "timeEnd": "10:45",
+                  "subject": "Aplic. de Estru. de Dados",
+                  "room": "LABTEC",
+                  "prof": "Carlos Henrique"
+                }
+              ]
+            },
+            {
+              "day": "Sexta",
+              "items": [
+                {
+                  "type": "class",
+                  "timeStart": "07:30",
+                  "timeEnd": "09:00",
+                  "subject": "Humanidade, Ética e Cid.",
+                  "room": "LABTEC",
+                  "prof": "Euclides Muniz"
+                },
+                {
+                  "type": "interval",
+                  "timeStart": "09:00",
+                  "timeEnd": "09:15",
+                  "label": "INTERVALO"
+                },
+                {
+                  "type": "class",
+                  "timeStart": "09:15",
+                  "timeEnd": "10:45",
+                  "subject": "Projeto de Sistemas",
+                  "room": "LABTEC",
+                  "prof": "Gerson Focking"
+                }
+              ]
+            }
           ]
         },
         "noturno": {
